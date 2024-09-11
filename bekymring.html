@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Highcharts CSV Dynamic Update</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-</head>
-<body>
-
-<div id="container" style="width:100%; height:400px;"></div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     Highcharts.chart('container', {
@@ -24,7 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
             align: 'left'
         },
         xAxis: {
-            type: 'category'
+            title: {
+                text: 'Year'
+            },
+            categories: [] // Years will be dynamically added
         },
         yAxis: {
             title: {
@@ -33,54 +24,39 @@ document.addEventListener('DOMContentLoaded', function () {
             max: 100,
             minRange: 70
         },
-        series: [
-            {
-                name: 'Series 1',
-                color: '#00785f',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 2',
-                color: '#3250c8',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 3',
-                color: '#64d28c',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 4',
-                color: '#5573e6',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 5',
-                color: '#fa6e3c',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 6',
-                color: '#fad250',
-                type: 'spline',
-                marker: { enabled: false }
-            },
-            {
-                name: 'Series 7',
-                color: '#7896ff',
-                type: 'spline',
-                marker: { enabled: false }
-            }
-        ],
+        series: [], // Series will be dynamically added
         data: {
-            csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/bekymring-test.csv', // Replace with your actual CSV URL
+            csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/bekymring-test.csv', // Your CSV file URL
             enablePolling: true,
-            dataRefreshRate: 60 // Refresh every 60 seconds
+            dataRefreshRate: 60,
+            parsed: function (columns) {
+                var categories = columns[0].slice(1); // Use the first column for categories (years)
+                var seriesNames = columns[1]; // Series names are in the first row of data
+
+                // Initialize series
+                var series = [
+                    { name: 'Ikke bekymret i det hele tatt', data: [] },
+                    { name: 'Litt bekymret', data: [] },
+                    { name: 'Ganske bekymret', data: [] },
+                    { name: 'Veldig bekymret', data: [] },
+                    { name: 'Vet ikke', data: [] }
+                ];
+
+                // Loop through the rows and assign the data to the correct series
+                for (var i = 1; i < columns.length; i++) {
+                    for (var j = 1; j <= 5; j++) {
+                        series[j - 1].data.push(parseFloat(columns[i][j]));
+                    }
+                }
+
+                // Set categories (years) and series in the chart
+                this.xAxis[0].setCategories(categories);
+                for (var k = 0; k < series.length; k++) {
+                    this.addSeries(series[k], false);
+                }
+
+                this.redraw(); // Redraw the chart with the new data
+            }
         },
         credits: {
             href: '',
@@ -100,6 +76,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-
-</body>
-</html>
