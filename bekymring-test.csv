@@ -1,6 +1,7 @@
-;2018;2019;2020;2021;2022;2023
-Ikke bekymret i det hele tatt;17;17;19;16;18;19
-Litt bekymret;46;45;46;43;42;43
-Ganske bekymret;25;26;25;27;25;24
-Veldig bekymret;10;10;9;10;11;11
-Vet ikke ;2;2;2;3;3;3
+Year;Ikke bekymret i det hele tatt;Litt bekymret;Ganske bekymret;Veldig bekymret;Vet ikke
+2018;17;46;25;10;2
+2019;17;45;26;10;2
+2020;19;46;25;9;2
+2021;16;43;27;10;3
+2022;18;42;25;11;3
+2023;19;43;24;11;3
