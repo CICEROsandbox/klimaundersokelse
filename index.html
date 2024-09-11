@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Highcharts Visualization</title>
-    <!-- Include Highcharts Library -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- Include Highcharts CSV Module -->
     <script src="https://code.highcharts.com/modules/data.js"></script>
-    <!-- (Optional) Include Highcharts Exporting Module -->
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <style>
-        /* Optional: Style your chart container */
         #container {
             width: 80%;
             height: 600px;
@@ -24,7 +20,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Function to fetch JSON configuration
             fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/config.json')
                 .then(response => {
                     if (!response.ok) {
@@ -33,7 +28,6 @@
                     return response.json();
                 })
                 .then(config => {
-                    // Initialize Highcharts after fetching JSON
                     Highcharts.chart('container', {
                         title: {
                             text: config.title,
@@ -63,25 +57,18 @@
                         series: [], // Will be populated from CSV
                         data: {
                             csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data.csv', // Path to your CSV file
-                            enablePolling: false, // Set to true if you want to poll for updates
-                            dataRefreshRate: 60, // Refresh rate in seconds
-                            enableCSV: true,
-                            enableJSON: false,
-                            // Define delimiter based on your CSV (comma in this case)
-                            delimiter: ';',
+                            enablePolling: false,
+                            dataRefreshRate: 60,
+                            delimiter: ';', // Use semicolon if your CSV uses that
                             parsed: function (columns) {
-                                // Log columns for debugging
                                 console.log('Parsed Columns:', columns);
 
-                                // Assuming first row is header
                                 var categories = [];
                                 var seriesData = [];
 
-                                // Extract headers (skip the first column if it's categories)
                                 var headers = columns[0].map(header => header.trim());
                                 console.log('Headers:', headers);
 
-                                // Initialize series based on headers (excluding the first column)
                                 for (var i = 1; i < headers.length; i++) {
                                     seriesData.push({
                                         name: headers[i],
@@ -89,12 +76,10 @@
                                     });
                                 }
 
-                                // Populate categories and series data
                                 for (var i = 1; i < columns.length; i++) {
-                                    categories.push(columns[i][0]); // First column as categories (e.g., Year)
+                                    categories.push(columns[i][0]); 
                                     for (var j = 1; j < columns[i].length; j++) {
                                         var value = parseFloat(columns[i][j]);
-                                        // Handle NaN values
                                         value = isNaN(value) ? 0 : value;
                                         seriesData[j - 1].data.push(value);
                                     }
@@ -103,15 +88,12 @@
                                 console.log('Categories:', categories);
                                 console.log('Series Data:', seriesData);
 
-                                // Update chart categories
                                 this.xAxis[0].setCategories(categories);
 
-                                // Add series to chart
                                 for (var i = 0; i < seriesData.length; i++) {
                                     this.addSeries(seriesData[i], false);
                                 }
 
-                                // Redraw chart after adding all series
                                 this.redraw();
                             }
                         },
