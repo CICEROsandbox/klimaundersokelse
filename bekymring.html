@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/bekymring-test.csv', // CSV file URL
             enablePolling: true,
             dataRefreshRate: 60, // Refresh every 60 seconds
-            delimiter: ';',  // Semicolon as the delimiter
+            delimiter: ','  // comma as the delimiter
             parsed: function (columns) {
                 var categories = [];
                 var seriesData = [
