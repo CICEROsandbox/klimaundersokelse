@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             title: {
                 text: 'Year'
             },
-            categories: [] // Years will be dynamically added
+            categories: [] // Will be dynamically filled
         },
         yAxis: {
             title: {
@@ -36,17 +36,14 @@ document.addEventListener('DOMContentLoaded', function () {
             max: 100,
             minRange: 70
         },
-        series: [], // Series will be dynamically added
+        series: [], // Will be dynamically filled
         data: {
-            csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/bekymring-test.csv', // Your CSV file URL
+            csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/bekymring-test.csv', // Your CSV URL
             enablePolling: true,
             dataRefreshRate: 60,
             parsed: function (columns) {
-                var categories = columns[0].slice(1); // Use the first column for categories (years)
-                var seriesNames = columns[1]; // Series names are in the first row of data
-
-                // Initialize series
-                var series = [
+                var categories = [];
+                var seriesData = [
                     { name: 'Ikke bekymret i det hele tatt', data: [] },
                     { name: 'Litt bekymret', data: [] },
                     { name: 'Ganske bekymret', data: [] },
@@ -54,20 +51,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     { name: 'Vet ikke', data: [] }
                 ];
 
-                // Loop through the rows and assign the data to the correct series
-                for (var i = 1; i < columns.length; i++) {
-                    for (var j = 1; j <= 5; j++) {
-                        series[j - 1].data.push(parseFloat(columns[i][j]));
-                    }
+                // Loop through the CSV rows (columns[i]) and assign categories/years and series data
+                for (var i = 1; i < columns.length; i++) { // Starting from 1 to skip header row
+                    categories.push(columns[i][0]); // First column is the category (year)
+                    seriesData[0].data.push(parseFloat(columns[i][1])); // "Ikke bekymret i det hele tatt"
+                    seriesData[1].data.push(parseFloat(columns[i][2])); // "Litt bekymret"
+                    seriesData[2].data.push(parseFloat(columns[i][3])); // "Ganske bekymret"
+                    seriesData[3].data.push(parseFloat(columns[i][4])); // "Veldig bekymret"
+                    seriesData[4].data.push(parseFloat(columns[i][5])); // "Vet ikke"
                 }
 
-                // Set categories (years) and series in the chart
+                // Apply categories (years) and series data to the chart
                 this.xAxis[0].setCategories(categories);
-                for (var k = 0; k < series.length; k++) {
-                    this.addSeries(series[k], false);
+                for (var j = 0; j < seriesData.length; j++) {
+                    this.addSeries(seriesData[j], false);
                 }
-
-                this.redraw(); // Redraw the chart with the new data
+                this.redraw();
             }
         },
         credits: {
