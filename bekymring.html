@@ -42,33 +42,38 @@ document.addEventListener('DOMContentLoaded', function () {
             enablePolling: true,
             dataRefreshRate: 60, // Refresh every 60 seconds
             delimiter: ',',  // comma as the delimiter
-            parsed: function (columns) {
-                var categories = [];
-                var seriesData = [
-                    { name: 'Ikke bekymret i det hele tatt', data: [] },
-                    { name: 'Litt bekymret', data: [] },
-                    { name: 'Ganske bekymret', data: [] },
-                    { name: 'Veldig bekymret', data: [] },
-                    { name: 'Vet ikke', data: [] }
-                ];
+        parsed: function (columns) {
+    console.log(columns); // Log the columns array to see if the data is being parsed correctly
+    var categories = [];
+    var seriesData = [
+        { name: 'Ikke bekymret i det hele tatt', data: [] },
+        { name: 'Litt bekymret', data: [] },
+        { name: 'Ganske bekymret', data: [] },
+        { name: 'Veldig bekymret', data: [] },
+        { name: 'Vet ikke', data: [] }
+    ];
 
-                // Loop through the CSV rows and assign categories (years) and series data
-                for (var i = 1; i < columns.length; i++) { // Skip the header row (index 0)
-                    categories.push(columns[i][0]); // Year is in the first column
-                    seriesData[0].data.push(parseFloat(columns[i][1])); // "Ikke bekymret i det hele tatt"
-                    seriesData[1].data.push(parseFloat(columns[i][2])); // "Litt bekymret"
-                    seriesData[2].data.push(parseFloat(columns[i][3])); // "Ganske bekymret"
-                    seriesData[3].data.push(parseFloat(columns[i][4])); // "Veldig bekymret"
-                    seriesData[4].data.push(parseFloat(columns[i][5])); // "Vet ikke"
-                }
+    // Loop through the CSV rows and assign categories/years and series data
+    for (var i = 1; i < columns.length; i++) { // Skip the header row (index 0)
+        categories.push(columns[i][0]); // Year is in the first column
+        seriesData[0].data.push(parseFloat(columns[i][1])); // "Ikke bekymret i det hele tatt"
+        seriesData[1].data.push(parseFloat(columns[i][2])); // "Litt bekymret"
+        seriesData[2].data.push(parseFloat(columns[i][3])); // "Ganske bekymret"
+        seriesData[3].data.push(parseFloat(columns[i][4])); // "Veldig bekymret"
+        seriesData[4].data.push(parseFloat(columns[i][5])); // "Vet ikke"
+    }
 
-                // Apply categories (years) and series data to the chart
-                this.xAxis[0].setCategories(categories);
-                for (var j = 0; j < seriesData.length; j++) {
-                    this.addSeries(seriesData[j], false); // Add each series
-                }
-                this.redraw(); // Redraw the chart with updated data
-            }
+    console.log(categories); // Log categories (years)
+    console.log(seriesData); // Log series data
+
+    // Apply categories (years) and series data to the chart
+    this.xAxis[0].setCategories(categories);
+    for (var j = 0; j < seriesData.length; j++) {
+        this.addSeries(seriesData[j], false); // Add each series
+    }
+    this.redraw(); // Redraw the chart with updated data
+}
+
         },
         credits: {
             href: '',
