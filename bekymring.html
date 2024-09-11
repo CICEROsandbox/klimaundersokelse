@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highcharts CSV Dynamic Update</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+
+<div id="container" style="width:100%; height:400px;"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Highcharts.chart('container', {
+        title: {
+            text: 'I hvilken grad bekymrer du deg for klimaendringer?',
+            style: {
+                fontFamily: 'Averta',
+                color: '#000000',
+                fontSize: '20px',
+                fontWeight: 'bold'
+            },
+            align: 'left'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Prosent'
+            },
+            max: 100,
+            minRange: 70
+        },
+        series: [
+            {
+                name: 'Series 1',
+                color: '#00785f',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 2',
+                color: '#3250c8',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 3',
+                color: '#64d28c',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 4',
+                color: '#5573e6',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 5',
+                color: '#fa6e3c',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 6',
+                color: '#fad250',
+                type: 'spline',
+                marker: { enabled: false }
+            },
+            {
+                name: 'Series 7',
+                color: '#7896ff',
+                type: 'spline',
+                marker: { enabled: false }
+            }
+        ],
+        data: {
+            csvURL: 'https://raw.githubusercontent.com/username/repo/main/81f3b04d-2637-4c36-896c-43986789565a.csv', // Replace with your actual CSV URL
+            enablePolling: true,
+            dataRefreshRate: 60 // Refresh every 60 seconds
+        },
+        credits: {
+            href: '',
+            text: 'N= 18:4046 19:4011 20:3986 21:4879 22:3969 23:4125, CICEROs klimaundersøkelse'
+        },
+        legend: {
+            itemStyle: {
+                fontSize: '14px',
+                fontFamily: 'Averta'
+            }
+        },
+        plotOptions: {
+            series: {
+                animation: false
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
