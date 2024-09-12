@@ -1,0 +1,126 @@
+{
+    "title": {
+        "text": "I hvilken grad bekymrer du deg for klimaendringer?",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold"
+        },
+        "align": "left"
+    },
+    "exporting": {},
+    "xAxis": {
+        "index": 0,
+        "isX": true,
+        "type": "category"
+    },
+    "yAxis": {
+        "index": 0,
+        "allowDecimals": false,
+        "ceiling": 100,
+        "max": 100,
+        "minRange": 70,
+        "title": {
+            "text": "Prosent"
+        }
+    },
+    "series": [
+        {
+            "name": "Series 1",
+            "data": [],
+            "color": "#00785f",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 2",
+            "data": [],
+            "color": "#3250c8",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 3",
+            "data": [],
+            "color": "#64d28c",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 4",
+            "data": [],
+            "color": "#5573e6",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 5",
+            "data": [],
+            "color": "#fa6e3c",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 6",
+            "data": [],
+            "color": "#fad250",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        },
+        {
+            "name": "Series 7",
+            "data": [],
+            "color": "#7896ff",
+            "type": "spline",
+            "marker": {
+                "enabled": false
+            }
+        }
+    ],
+    "data": {
+        "csv": ";Ikke bekymret i det hele tatt;Litt bekymret;Ganske bekymret;Veldig bekymret;Vet ikke\n2018;17;46;25;10;2\n2019;17;45;26;10;2\n2020;19;46;25;9;2\n2021;16;43;27;10;3\n2022;18;42;25;11;3\n2023;19;43;24;11;3",
+        "googleSpreadsheetKey": false,
+        "googleSpreadsheetWorksheet": false
+    },
+    "pane": {
+        "background": []
+    },
+    "responsive": {
+        "rules": []
+    },
+    "credits": {
+        "href": "",
+        "text": "N= 18:4046 19:4011 20:3986 21:4879 22:3969 23:4125, CICEROs klimaunders\u00f8kelse"
+    },
+    "legend": {
+        "itemStyle": {
+            "fontSize": "14px",
+            "fontFamily": "Averta"
+        }
+    },
+    "plotOptions": {
+        "series": {
+            "animation": false,
+            "states": {
+                "inactive": {}
+            }
+        }
+    },
+    "chart": {},
+    "chartarea": {},
+    "plotarea": {},
+    "tooltip": {}
+}
