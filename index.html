@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(styleConfig => {
             // Set the chart title dynamically based on the CSV file name
-            styleConfig.title.text = `Chart Title: ${fileName}`;
+            styleConfig.title.text = `${fileName}`;
 
             // Add the data loading configuration to the styleConfig
             styleConfig.data = {
