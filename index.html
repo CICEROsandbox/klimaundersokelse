@@ -13,7 +13,7 @@
 <script>
 // Function to load chart styles from a JSON file and combine it with the data configuration
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/bekymring.json')  // Update this path to where your JSON file is stored
+    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/chart-styles.json')  // Update this path to where your JSON file is stored
         .then(response => response.json())
         .then(styleConfig => {
             // Add the data loading configuration to the styleConfig
