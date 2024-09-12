@@ -13,12 +13,20 @@
 <script>
 // Function to load chart styles from a JSON file and combine it with the data configuration
 document.addEventListener('DOMContentLoaded', function () {
+    const csvURL = 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data.csv';  // CSV URL
+
+    // Extract the file name from the CSV URL
+    const fileName = csvURL.split('/').pop().replace('.csv', '');
+
     fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/chart-styles.json')  // Update this path to where your JSON file is stored
         .then(response => response.json())
         .then(styleConfig => {
+            // Set the chart title dynamically based on the CSV file name
+            styleConfig.title.text = `Chart Title: ${fileName}`;
+
             // Add the data loading configuration to the styleConfig
             styleConfig.data = {
-                csvURL: 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data.csv',
+                csvURL: csvURL,  // Use the CSV URL
                 enablePolling: true,
                 dataRefreshRate: 60 // Refresh every 60 seconds
             };
