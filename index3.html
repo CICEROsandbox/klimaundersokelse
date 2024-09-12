@@ -11,9 +11,7 @@
 <!-- Dropdown menu to select CSV files -->
 <label for="csvSelect">Choose a dataset:</label>
 <select id="csvSelect">
-    <option value="https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/Klimaendringene%20har%20ingen%20negative%20konsekvenser.csv">Dataset 1: Klimaendringene har ingen negative konsekvenser</option>
-    <option value="https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/I%20hvilken%20grad%20bekymrer%20du%20deg%20for%20tap%20av%20natur.csv">Dataset 2: I hvilken grad bekymrer du deg for tap av natur</option>
-    <!-- Add more options as needed -->
+    <option value="">Loading datasets...</option>
 </select>
 
 <div id="container" style="width:100%; height:400px;"></div>
@@ -42,16 +40,42 @@ function renderChart(csvURL) {
         .catch(error => console.error('Error loading style config:', error));
 }
 
+// Function to populate the dropdown with CSV files from the GitHub API
+function populateDropdown() {
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('csvSelect');
+            dropdown.innerHTML = '';  // Clear the loading message
+
+            data.forEach(file => {
+                if (file.name.endsWith('.csv')) {  // Only include CSV files
+                    const option = document.createElement('option');
+                    option.value = file.download_url;
+                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
+                    dropdown.appendChild(option);
+                }
+            });
+
+            // Automatically render the first dataset
+            if (dropdown.options.length > 0) {
+                renderChart(dropdown.value);  // Render the first chart on page load
+            }
+        })
+        .catch(error => console.error('Error fetching CSV files:', error));
+}
+
 // Event listener for dropdown menu change
 document.getElementById('csvSelect').addEventListener('change', function () {
     const selectedCSV = this.value;
     renderChart(selectedCSV);  // Render the chart with the selected CSV
 });
 
-// Initial chart rendering with the first CSV option
+// Populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', function () {
-    const initialCSV = document.getElementById('csvSelect').value;
-    renderChart(initialCSV);  // Render the chart with the first CSV on page load
+    populateDropdown();
 });
 </script>
 
