@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highcharts CSV Dynamic Update</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+
+<div id="container1" style="width:100%; height:400px;"></div>
+<div id="container2" style="width:100%; height:400px;"></div>
+
+<script>
+// Function to load chart styles and customize title and credits dynamically
+function renderChart(containerId, csvURL, chartTitle, chartCredits) {
+    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/chart-styles.json')
+        .then(response => response.json())
+        .then(styleConfig => {
+            // Set the custom title and credits dynamically for each chart
+            styleConfig.title.text = chartTitle;
+            styleConfig.credits.text = chartCredits;
+
+            // Add the data loading configuration dynamically
+            styleConfig.data = {
+                csvURL: csvURL, // Load data from different CSV files
+                enablePolling: true,
+                dataRefreshRate: 60 // Refresh every 60 seconds
+            };
+
+            // Render the chart in the specified container
+            Highcharts.chart(containerId, styleConfig);
+        })
+        .catch(error => console.error('Error loading style config:', error));
+}
+
+// Render multiple charts with different CSV data, titles, and credits
+document.addEventListener('DOMContentLoaded', function () {
+    renderChart(
+        'container1', 
+        'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/data1.csv', 
+        'Title for Chart 1', 
+        'Custom credits for Chart 1'
+    );
+    
+    renderChart(
+        'container2', 
+        'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/data2.csv', 
+        'Title for Chart 2', 
+        'Custom credits for Chart 2'
+    );
+});
+</script>
+
+</body>
+</html>
+
