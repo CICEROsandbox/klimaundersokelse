@@ -15,14 +15,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     const csvURL = 'https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/I%20hvilken%20grad%20bekymrer%20du%20deg%20for%20tap%20av%20natur.csv';  // CSV URL
 
-    // Extract the file name from the CSV URL
-    const fileName = csvURL.split('/').pop().replace('.csv', '');
+    // Extract the file name from the CSV URL and decode spaces (%20) into actual spaces
+    const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
 
     fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/chart-styles.json')  // Update this path to where your JSON file is stored
         .then(response => response.json())
         .then(styleConfig => {
-            // Set the chart title dynamically based on the CSV file name
-            styleConfig.title.text = `${fileName}`;
+            // Set the chart title dynamically based on the decoded CSV file name
+            styleConfig.title.text = `Chart Title: ${fileName}`;
 
             // Add the data loading configuration to the styleConfig
             styleConfig.data = {
