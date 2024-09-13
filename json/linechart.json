@@ -57,22 +57,22 @@
     },
     "series": [
         {
-            "color": "#5573e6"  // Blue
+            "color": "#5573e6" 
         },
         {
-            "color": "#fa6e3c"  // Orange
+            "color": "#fa6e3c"  
         },
         {
-            "color": "#fad250"  // Yellow
+            "color": "#fad250"  
         },
         {
-            "color": "#00785f"  // Green
+            "color": "#00785f"  
         },
         {
-            "color": "#7896ff"  // Light Blue
+            "color": "#7896ff"  
         },
         {
-            "color": "#9b59b6"  // Purple
+            "color": "#9b59b6"  
         }
     ],
     "legend": {
