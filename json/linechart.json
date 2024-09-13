@@ -1,9 +1,9 @@
 {
     "chart": {
-        "type": "line"
+        "type": "spline"
     },
     "title": {
-        "text": "test",
+        "text": "",
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -45,32 +45,38 @@
         {
             "name": "Stemmer svært dårlig",
             "color": "#5573e6",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer ganske dårlig",
             "color": "#fa6e3c",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer verken dårlig eller godt",
             "color": "#fad250",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer ganske godt",
             "color": "#00785f",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer svært godt",
             "color": "#7896ff",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Vet ikke",
             "color": "#9b59b6",
-            "marker": { "symbol": "circle" }
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         }
     ],
     "legend": {
@@ -86,12 +92,12 @@
         "text": ""
     },
     "plotOptions": {
-        "line": {
+        "spline": {  
             "marker": {
                 "enabled": true,
                 "symbol": "circle"
             },
-            "lineWidth": 2
+            "lineWidth": 3  
         }
     }
 }
