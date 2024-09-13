@@ -44,7 +44,7 @@
     "data": {
         "csvURL": "",  
         "enablePolling": true,
-        "dataRefreshRate": 60  
+        "dataRefreshRate": 60
     },
     "plotOptions": {
         "spline": {
@@ -52,9 +52,29 @@
                 "enabled": true,
                 "symbol": "circle"
             },
-            "lineWidth": 3
+            "lineWidth": 3  
         }
     },
+    "series": [
+        {
+            "color": "#5573e6"  // Blue
+        },
+        {
+            "color": "#fa6e3c"  // Orange
+        },
+        {
+            "color": "#fad250"  // Yellow
+        },
+        {
+            "color": "#00785f"  // Green
+        },
+        {
+            "color": "#7896ff"  // Light Blue
+        },
+        {
+            "color": "#9b59b6"  // Purple
+        }
+    ],
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
