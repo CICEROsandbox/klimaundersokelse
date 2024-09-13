@@ -47,8 +47,8 @@
     "yAxis": {
         "index": 0,
         "allowDecimals": false,
-        "ceiling": 100,
-        "max": 100,
+        "ceiling": 70,
+        "max": 70,
         "minRange": 70,
         "title": {
             "text": "Prosent",
