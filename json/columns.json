@@ -1,0 +1,143 @@
+{
+    "title": {
+        "text": "Jeg har et ansvar for a\u030a redusere klimagassutslippene mine",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "subtitle": {
+        "text": "Kj\u00f8nn\n\n (2023)",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#3250c8",
+            "fontSize": "17px",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "exporting": {},
+    "chart": {
+        "polar": false
+    },
+    "xAxis": {
+        "index": 0,
+        "isX": true,
+        "type": "category",
+        "labels": {
+            "style": {
+                "fontSize": "14px"
+            }
+        },
+        "title": {
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "20px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        }
+    },
+    "yAxis": {
+        "index": 0,
+        "allowDecimals": false,
+        "ceiling": 100,
+        "max": 100,
+        "minRange": 70,
+        "title": {
+            "text": "Prosent",
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "14px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        },
+        "labels": {
+            "style": {
+                "fontSize": "15px"
+            }
+        }
+    },
+    "series": [
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid",
+            "color": "#5573e6",
+            "name": "Stemmer sv\u00e6rt d\u00e5rlig"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#fa6e3c",
+            "name": "Stemmer ganske d\u00e5rlig"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#fad250",
+            "name": "Stemmer verken d\u00e5rlig eller godt"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#00785f",
+            "name": "Stemmer ganske godt"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "name": "Vet ikke"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "name": "Vet ikke"
+        }
+    ],
+    "data": {
+        "csv": "Svar,Mann,Kvinne\nStemmer sv\u00e6rt d\u00e5rlig,10 ,4 \nStemmer ganske d\u00e5rlig,8 ,3 \nStemmer verken d\u00e5rlig eller godt,28 ,26 \nStemmer ganske godt,37 ,41 \nStemmer sv\u00e6rt godt,15 ,23 \nVet ikke,2 ,3 ",
+        "googleSpreadsheetKey": false,
+        "googleSpreadsheetWorksheet": false
+    },
+    "pane": {
+        "background": []
+    },
+    "responsive": {
+        "rules": []
+    },
+    "credits": {
+        "href": "",
+        "text": "N=4125, CICEROs klimaunders\u00f8kelse"
+    },
+    "legend": {
+        "itemStyle": {
+            "fontFamily": "Averta",
+            "color": "#333333",
+            "fontSize": "14px",
+            "fontWeight": "bold",
+            "fontStyle": "normal",
+            "cursor": "pointer"
+        }
+    }
+}
