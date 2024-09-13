@@ -23,7 +23,7 @@
     },
     "exporting": {},
     "chart": {
-        "type": "line"  // Ensure this is set to line for line chart
+        "type": "line"  
     },
     "xAxis": {
         "type": "category",
