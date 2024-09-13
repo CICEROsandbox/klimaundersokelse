@@ -25,7 +25,7 @@ function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
     // Render line chart with data from /data/ using linechart.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'line', 'lineChartContainer', 'linechart.json');
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
