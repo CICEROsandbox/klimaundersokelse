@@ -80,7 +80,7 @@
             "fontFamily": "Averta",
             "color": "#333333",
             "fontSize": "14px",
-            "fontWeight": "regular"
+            "fontWeight": "normal"
         }
     },
     "credits": {
