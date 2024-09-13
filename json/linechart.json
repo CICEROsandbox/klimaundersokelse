@@ -1,44 +1,132 @@
 {
-  "chart": {
-    "type": "line"
-  },
-  "title": {
-    "text": "Jeg har et ansvar for å redusere klimautslippene mine",
-    "style": {
-      "fontFamily": "Averta",
-      "color": "#000000",
-      "fontSize": "20px",
-      "fontWeight": "bold"
-    },
-    "align": "left"
-  },
-  "xAxis": {
-    "type": "category"
-  },
-  "yAxis": {
     "title": {
-      "text": "Prosent"
+        "text": "Jeg har et ansvar for å redusere klimagassutslippene mine",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold",
+            "fontStyle": "normal"
+        },
+        "align": "left"
     },
-    "max": 100
-  },
-  "legend": {
-    "itemStyle": {
-      "fontFamily": "Averta",
-      "fontSize": "14px"
-    }
-  },
-  "credits": {
-    "href": "",
-    "text": "N= 1425, CICEROs klimaundersøkelse"
-  },
-  "plotOptions": {
-    "series": {
-      "animation": false
+    "subtitle": {
+        "text": "Kjønn (2023)",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#3250c8",
+            "fontSize": "17px",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+        },
+        "align": "left"
     },
-    "line": {
-      "marker": {
-        "enabled": true
-      }
+    "exporting": {},
+    "chart": {
+        "type": "line"  // Ensure this is set to line for line chart
+    },
+    "xAxis": {
+        "type": "category",
+        "labels": {
+            "style": {
+                "fontSize": "14px"
+            }
+        },
+        "title": {
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "20px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        }
+    },
+    "yAxis": {
+        "allowDecimals": false,
+        "max": 100,
+        "minRange": 70,
+        "title": {
+            "text": "Prosent",
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "14px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        },
+        "labels": {
+            "style": {
+                "fontSize": "15px"
+            }
+        }
+    },
+    "series": [
+        {
+            "name": "Stemmer svært dårlig",
+            "color": "#5573e6",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid"
+        },
+        {
+            "name": "Stemmer ganske dårlig",
+            "color": "#fa6e3c",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid"
+        },
+        {
+            "name": "Stemmer verken dårlig eller godt",
+            "color": "#fad250",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid"
+        },
+        {
+            "name": "Stemmer ganske godt",
+            "color": "#00785f",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid"
+        },
+        {
+            "name": "Vet ikke",
+            "color": "#7896ff",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid"
+        }
+    ],
+    "data": {
+        "csvURL": "",  // This will be dynamically populated by the script
+        "enablePolling": true,
+        "dataRefreshRate": 60
+    },
+    "pane": {
+        "background": []
+    },
+    "responsive": {
+        "rules": []
+    },
+    "credits": {
+        "href": "",
+        "text": "N=4125, CICEROs klimaundersøkelse"
+    },
+    "legend": {
+        "itemStyle": {
+            "fontFamily": "Averta",
+            "color": "#333333",
+            "fontSize": "14px",
+            "fontWeight": "bold",
+            "fontStyle": "normal",
+            "cursor": "pointer"
+        }
     }
-  }
 }
