@@ -45,7 +45,9 @@
         {
             "name": "Stemmer svært dårlig",
             "color": "#5573e6",
-            "marker": { "symbol": "circle" },
+            "marker": { 
+                "enabled": false
+            }
             "lineWidth": 3 
         },
         {
