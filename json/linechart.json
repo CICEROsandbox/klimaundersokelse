@@ -75,7 +75,7 @@
         {
             "name": "Vet ikke",
             "color": "#9b59b6",
-            "marker": { "symbol": "circle" },
+            "marker": {  },
             "lineWidth": 3  
         }
     ],
