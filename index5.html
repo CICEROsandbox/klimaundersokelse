@@ -1,133 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Highcharts CSV Dynamic Update</title>
+    <title>Test Highcharts Bar Chart</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
-
-<!-- Dropdown menu to select CSV files -->
-<label for="csvSelect">Velg påstand:</label>
-<select id="csvSelect">
-    <option value="">Loading datasets...</option>
-</select>
 
 <div id="container" style="width:100%; height:400px;"></div>
 
 <script>
-// Function to load and render a bar chart based on the selected CSV
-function renderChart(csvURL) {
-    const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
-
-    // Fetch the renamed JSON configuration "columns.json" for bar chart
-    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/columns.json')
-        .then(response => response.json())
-        .then(styleConfig => {
-            // Set the chart title dynamically based on the selected CSV file name
-            styleConfig.title.text = `${fileName}`;
-
-            // Add the data loading configuration to the styleConfig
-            styleConfig.data = {
-                csvURL: csvURL,  // Use the selected CSV URL
-                enablePolling: true,
-                dataRefreshRate: 60, // Refresh every 60 seconds
-                complete: function (csvData) {
-                    console.log("CSV Data loaded:", csvData);  // Add debugging to see the loaded CSV data
-
-                    // Check if categories and series are being extracted correctly
-                    const categories = [];
-                    const seriesData = [];
-
-                    csvData.forEach((row, index) => {
-                        if (index === 0) {
-                            // First row contains the series names (headers)
-                            for (let i = 1; i < row.length; i++) {
-                                seriesData.push({
-                                    name: row[i],
-                                    data: []
-                                });
-                            }
-                        } else {
-                            // The first column contains the categories (x-axis)
-                            categories.push(row[0]);
-                            // Fill series data
-                            for (let i = 1; i < row.length; i++) {
-                                seriesData[i - 1].data.push(parseFloat(row[i]));
-                            }
-                        }
-                    });
-
-                    console.log("Categories:", categories);
-                    console.log("Series Data:", seriesData);
-
-                    // Update the chart config with the parsed categories and series data
-                    styleConfig.xAxis.categories = categories;
-                    styleConfig.series = seriesData;
-
-                    // Fetch the corresponding credit from a .txt file
-                    const creditURL = `https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/credits/${fileName}.txt`;
-                    fetch(creditURL)
-                        .then(response => response.text())
-                        .then(creditText => {
-                            // Set the chart credits dynamically
-                            styleConfig.credits = {
-                                text: creditText,
-                                href: ''  // If there's no URL link, keep href empty
-                            };
-
-                            // Initialize the Highcharts chart with the combined configuration
-                            Highcharts.chart('container', styleConfig);
-                        })
-                        .catch(error => {
-                            console.error('Error fetching credits:', error);
-                            // Fallback if no credit file is found
-                            styleConfig.credits = { text: 'No credits available' };
-                            Highcharts.chart('container', styleConfig);
-                        });
-                }
-            };
-        })
-        .catch(error => console.error('Error loading style config:', error));
-}
-
-// Function to populate the dropdown with CSV files from the GitHub API
-function populateDropdown() {
-    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/kjonn';
-
-    fetch(apiURL)
-        .then(response => response.json())
-        .then(data => {
-            const dropdown = document.getElementById('csvSelect');
-            dropdown.innerHTML = '';  // Clear the loading message
-
-            data.forEach(file => {
-                if (file.name.endsWith('.csv')) {  // Only include CSV files
-                    const option = document.createElement('option');
-                    option.value = file.download_url;
-                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
-                    dropdown.appendChild(option);
-                }
-            });
-
-            // Automatically render the first dataset
-            if (dropdown.options.length > 0) {
-                renderChart(dropdown.value);  // Render the first chart on page load
-            }
-        })
-        .catch(error => console.error('Error fetching CSV files:', error));
-}
-
-// Event listener for dropdown menu change
-document.getElementById('csvSelect').addEventListener('change', function () {
-    const selectedCSV = this.value;
-    renderChart(selectedCSV);  // Render the chart with the selected CSV
-});
-
-// Populate the dropdown when the page loads
-document.addEventListener('DOMContentLoaded', function () {
-    populateDropdown();
+// Test with static data
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Static Test Chart'
+    },
+    xAxis: {
+        categories: ['Stemmer svært dårlig', 'Stemmer ganske dårlig', 'Stemmer verken dårlig eller godt', 'Stemmer ganske godt', 'Stemmer svært godt', 'Vet ikke']
+    },
+    series: [{
+        name: 'Mann',
+        data: [10, 8, 28, 37, 15, 2]
+    }, {
+        name: 'Kvinne',
+        data: [4, 3, 26, 41, 23, 3]
+    }]
 });
 </script>
 
