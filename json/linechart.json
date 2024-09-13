@@ -3,7 +3,7 @@
         "type": "spline"
     },
     "title": {
-        "text": "",  // Dynamically populated
+        "text": "",  
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -42,9 +42,9 @@
         }
     },
     "data": {
-        "csvURL": "",  // Dynamically populated CSV URL
+        "csvURL": "",  
         "enablePolling": true,
-        "dataRefreshRate": 60  // Refresh every 60 seconds
+        "dataRefreshRate": 60  
     },
     "plotOptions": {
         "spline": {
@@ -65,6 +65,6 @@
     },
     "credits": {
         "href": "",
-        "text": ""  // Dynamically populated
+        "text": ""  
     }
 }
