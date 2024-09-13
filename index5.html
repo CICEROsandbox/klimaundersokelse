@@ -4,6 +4,7 @@
     <title>Highcharts CSV Dynamic Update</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
 
@@ -16,24 +17,46 @@
 <div id="container" style="width:100%; height:400px;"></div>
 
 <script>
-// Function to load and render a chart based on the selected CSV
+// Function to load and render a chart based on the selected CSV and columns.json configuration
 function renderChart(csvURL) {
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Dynamic CSV Test'
-        },
-        data: {
-            csvURL: csvURL,  // Use the selected CSV URL
-            enablePolling: true,
-            dataRefreshRate: 60  // Refresh every 60 seconds
-        },
-        xAxis: {
-            type: 'category'
-        }
-    });
+    const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
+
+    // Fetch the columns.json configuration for chart styling
+    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/columns.json')
+        .then(response => response.json())
+        .then(styleConfig => {
+            // Set the chart title dynamically based on the selected CSV file name
+            styleConfig.title.text = `${fileName}`;
+
+            // Dynamically load the CSV data into the chart configuration
+            styleConfig.data = {
+                csvURL: csvURL,  // Use the selected CSV URL
+                enablePolling: true,
+                dataRefreshRate: 60  // Refresh every 60 seconds
+            };
+
+            // Fetch the corresponding credit from a .txt file
+            const creditURL = `https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/credits/${fileName}.txt`;
+            fetch(creditURL)
+                .then(response => response.text())
+                .then(creditText => {
+                    // Set the chart credits dynamically
+                    styleConfig.credits = {
+                        text: creditText,
+                        href: ''  // If there's no URL link, keep href empty
+                    };
+
+                    // Initialize the Highcharts chart with the combined configuration
+                    Highcharts.chart('container', styleConfig);
+                })
+                .catch(error => {
+                    console.error('Error fetching credits:', error);
+                    // Fallback if no credit file is found
+                    styleConfig.credits = { text: 'No credits available' };
+                    Highcharts.chart('container', styleConfig);
+                });
+        })
+        .catch(error => console.error('Error loading style config:', error));
 }
 
 // Function to populate the dropdown with CSV files from the GitHub API
