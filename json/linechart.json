@@ -1,9 +1,9 @@
 {
     "chart": {
-        "type": "spline" 
+        "type": "spline"
     },
     "title": {
-        "text": "test",  
+        "text": "",  // Dynamically populated
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -41,44 +41,20 @@
             }
         }
     },
-    "series": [
-        {
-            "name": "Stemmer svært dårlig",
-            "color": "#5573e6",
-            "marker": { "symbol": "circle" },
-            "lineWidth": 3 
-        },
-        {
-            "name": "Stemmer ganske dårlig",
-            "color": "#fa6e3c",
-            "marker": { "symbol": "circle" },
-            "lineWidth": 3  
-        },
-        {
-            "name": "Stemmer verken dårlig eller godt",
-            "color": "#fad250",
-            "marker": { "symbol": "circle" },
-            "lineWidth": 3 
-        },
-        {
-            "name": "Stemmer ganske godt",
-            "color": "#00785f",
-            "marker": { "symbol": "circle" },
-            "lineWidth": 3  
-        },
-        {
-            "name": "Stemmer svært godt",
-            "color": "#7896ff",
-            "marker": { "symbol": "circle" },
-            "lineWidth": 3 
-        },
-        {
-            "name": "Vet ikke",
-            "color": "#9b59b6",
-            "marker": { "enabled": false },
-            "lineWidth": 3  
+    "data": {
+        "csvURL": "",  // Dynamically populated CSV URL
+        "enablePolling": true,
+        "dataRefreshRate": 60  // Refresh every 60 seconds
+    },
+    "plotOptions": {
+        "spline": {
+            "marker": {
+                "enabled": true,
+                "symbol": "circle"
+            },
+            "lineWidth": 3
         }
-    ],
+    },
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
@@ -89,15 +65,6 @@
     },
     "credits": {
         "href": "",
-        "text": ""  
-    },
-    "plotOptions": {
-        "spline": {  
-            "marker": {
-                "enabled": true,
-                "symbol": "circle"
-            },
-            "lineWidth": 3  
-        }
+        "text": ""  // Dynamically populated
     }
 }
