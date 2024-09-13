@@ -1,0 +1,86 @@
+{
+  "title": {
+    "text": "",
+    "style": {
+      "fontFamily": "Averta",
+      "color": "#000000",
+      "fontSize": "20px",
+      "fontWeight": "bold"
+    },
+    "align": "left"
+  },
+  "xAxis": {
+    "type": "category"
+  },
+  "yAxis": {
+    "title": {
+      "text": "Prosent"
+    },
+    "max": 100,
+    "minRange": 70
+  },
+  "series": [
+    {
+      "name": "Series 1",
+      "color": "#00785f",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 2",
+      "color": "#3250c8",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 3",
+      "color": "#64d28c",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 4",
+      "color": "#5573e6",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 5",
+      "color": "#fa6e3c",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 6",
+      "color": "#fad250",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    },
+    {
+      "name": "Series 7",
+      "color": "#7896ff",
+      "type": "bar",  // Change to "bar"
+      "marker": { "enabled": false }
+    }
+  ],
+  "credits": {
+    "href": "",
+    "text": ""
+  },
+  "legend": {
+    "itemStyle": {
+      "fontSize": "14px",
+      "fontFamily": "Averta"
+    }
+  },
+  "plotOptions": {
+    "series": {
+      "animation": false
+    },
+    "bar": {  // Additional options for bar charts
+      "dataLabels": {
+        "enabled": true
+      }
+    }
+  }
+}
