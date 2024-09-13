@@ -3,7 +3,7 @@
         "type": "line"
     },
     "title": {
-        "text": "",  // This will be dynamically populated
+        "text": "",
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -41,7 +41,7 @@
             }
         }
     },
-    "series": [],  // Series data and names will be populated dynamically
+    "series": [],
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
@@ -52,7 +52,7 @@
     },
     "credits": {
         "href": "",
-        "text": ""  // This will be dynamically populated
+        "text": ""
     },
     "plotOptions": {
         "line": {
