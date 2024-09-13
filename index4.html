@@ -21,7 +21,7 @@
 function renderChart(csvURL) {
     const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
 
-    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/bargraph.json')  // Fetch JSON configuration for bar graph
+    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/chart-styles.json')  // Fetch JSON configuration for bar graph
         .then(response => response.json())
         .then(styleConfig => {
             // Set the chart title dynamically based on the selected CSV file name
@@ -60,7 +60,7 @@ function renderChart(csvURL) {
 
 // Function to populate the dropdown with CSV files from the GitHub API
 function populateDropdown() {
-    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/kjonn';
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/';
 
     fetch(apiURL)
         .then(response => response.json())
