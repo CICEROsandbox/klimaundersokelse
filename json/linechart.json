@@ -1,9 +1,9 @@
 {
     "chart": {
-        "type": "spline"
+        "type": "spline"  // Use 'spline' for smooth lines
     },
     "title": {
-        "text": "",
+        "text": "",  // Dynamically populated
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -45,38 +45,38 @@
         {
             "name": "Stemmer svært dårlig",
             "color": "#5573e6",
-            "marker": {"enabled": false},
-            "lineWidth": 3 
+            "marker": { "symbol": "circle" },
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer ganske dårlig",
             "color": "#fa6e3c",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer verken dårlig eller godt",
             "color": "#fad250",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer ganske godt",
             "color": "#00785f",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Stemmer svært godt",
             "color": "#7896ff",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3 
+            "lineWidth": 3  // Thicker line
         },
         {
             "name": "Vet ikke",
             "color": "#9b59b6",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  
+            "lineWidth": 3  // Thicker line
         }
     ],
     "legend": {
@@ -89,15 +89,15 @@
     },
     "credits": {
         "href": "",
-        "text": ""
+        "text": ""  // Dynamically populated
     },
     "plotOptions": {
-        "spline": {  
+        "spline": {  // Apply these settings specifically for the spline type
             "marker": {
                 "enabled": true,
                 "symbol": "circle"
             },
-            "lineWidth": 3  
+            "lineWidth": 3  // Set the line thickness for splines
         }
     }
 }
