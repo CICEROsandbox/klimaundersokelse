@@ -21,7 +21,7 @@
 function renderChart(csvURL) {
     const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
 
-    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/bekymring.json')  // Fetch JSON configuration for bar graph
+    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/linechart.json')  // Fetch JSON configuration for bar graph
         .then(response => response.json())
         .then(styleConfig => {
             // Set the chart title dynamically based on the selected CSV file name
