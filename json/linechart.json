@@ -22,7 +22,7 @@
             }
         }
     },
-    "series": [],  // Series will be dynamically populated
+    "series": [],
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
@@ -32,6 +32,6 @@
     },
     "credits": {
         "href": "",
-        "text": ""  // Credits will be dynamically populated
+        "text": ""
     }
 }
