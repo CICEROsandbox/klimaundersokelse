@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Results</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+
+<!-- Dropdown menu to select the question -->
+<label for="questionSelect">Velg spørsmål:</label>
+<select id="questionSelect">
+    <option value="">Loading questions...</option>
+</select>
+
+<!-- Containers for the three charts -->
+<div id="lineChartContainer" style="width:100%; height:400px;"></div>
+<div id="genderChartContainer" style="width:100%; height:400px;"></div>
+<div id="ageChartContainer" style="width:100%; height:400px;"></div>
+
+<script>
+// Function to load and render all three charts based on the selected question
+function renderCharts(question) {
+    const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+
+    // Render line chart with data from /data/
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'line', 'lineChartContainer', 'columns.json');
+
+    // Render gender distribution chart with data from /data/kjonn/
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+
+    // Render age distribution chart with data from /data/alder/
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns.json');
+}
+
+// Function to load and render a chart in a specific container
+function renderChart(csvURL, chartType, container, jsonFile) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            // Set the chart type (line or column)
+            styleConfig.chart.type = chartType;
+
+            // Load CSV data into the chart configuration
+            styleConfig.data = {
+                csvURL: csvURL,
+                enablePolling: true,
+                dataRefreshRate: 60  // Refresh every 60 seconds
+            };
+
+            // Render the chart in the given container
+            Highcharts.chart(container, styleConfig);
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+// Function to populate the dropdown with available questions
+function populateDropdown() {
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('questionSelect');
+            dropdown.innerHTML = '';  // Clear the loading message
+
+            data.forEach(file => {
+                if (file.name.endsWith('.csv')) {  // Only include CSV files
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
+                    dropdown.appendChild(option);
+                }
+            });
+
+            // Automatically render the first dataset if available
+            if (dropdown.options.length > 0) {
+                renderCharts(dropdown.value);  // Render the first chart on page load
+            }
+        })
+        .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Event listener for dropdown menu change
+document.getElementById('questionSelect').addEventListener('change', function () {
+    const selectedQuestion = this.value;
+    if (selectedQuestion) {
+        renderCharts(selectedQuestion);  // Render the charts with the selected question
+    }
+});
+
+// Populate the dropdown when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    populateDropdown();
+});
+</script>
+
+</body>
+</html>
