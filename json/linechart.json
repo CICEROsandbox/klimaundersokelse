@@ -3,7 +3,7 @@
         "type": "line"
     },
     "title": {
-        "text": "",
+        "text": "",  // Dynamically populated
         "style": {
             "fontFamily": "Averta",
             "color": "#000000",
@@ -41,7 +41,38 @@
             }
         }
     },
-    "series": [],
+    "series": [
+        {
+            "name": "Stemmer svært dårlig",
+            "color": "#5573e6",  // Blue
+            "marker": { "symbol": "circle" }
+        },
+        {
+            "name": "Stemmer ganske dårlig",
+            "color": "#fa6e3c",  // Orange
+            "marker": { "symbol": "circle" }
+        },
+        {
+            "name": "Stemmer verken dårlig eller godt",
+            "color": "#fad250",  // Yellow
+            "marker": { "symbol": "circle" }
+        },
+        {
+            "name": "Stemmer ganske godt",
+            "color": "#00785f",  // Green
+            "marker": { "symbol": "circle" }
+        },
+        {
+            "name": "Stemmer svært godt",
+            "color": "#7896ff",  // Light blue
+            "marker": { "symbol": "circle" }
+        },
+        {
+            "name": "Vet ikke",
+            "color": "#9b59b6",  // Purple
+            "marker": { "symbol": "circle" }
+        }
+    ],
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
@@ -52,7 +83,7 @@
     },
     "credits": {
         "href": "",
-        "text": ""
+        "text": ""  // Dynamically populated
     },
     "plotOptions": {
         "line": {
