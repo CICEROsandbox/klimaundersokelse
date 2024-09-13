@@ -1,29 +1,6 @@
 {
-    "title": {
-        "text": "Jeg har et ansvar for å redusere klimagassutslippene mine",
-        "style": {
-            "fontFamily": "Averta",
-            "color": "#000000",
-            "fontSize": "20px",
-            "fontWeight": "bold",
-            "fontStyle": "normal"
-        },
-        "align": "left"
-    },
-    "subtitle": {
-        "text": "Kjønn (2023)",
-        "style": {
-            "fontFamily": "Averta",
-            "color": "#3250c8",
-            "fontSize": "17px",
-            "fontWeight": "normal",
-            "fontStyle": "normal"
-        },
-        "align": "left"
-    },
-    "exporting": {},
     "chart": {
-        "type": "line"  
+        "type": "line"
     },
     "xAxis": {
         "type": "category",
@@ -31,102 +8,30 @@
             "style": {
                 "fontSize": "14px"
             }
-        },
-        "title": {
-            "style": {
-                "fontFamily": "Default",
-                "color": "#666666",
-                "fontSize": "20px",
-                "fontWeight": "normal",
-                "fontStyle": "normal"
-            }
         }
     },
     "yAxis": {
         "allowDecimals": false,
         "max": 100,
-        "minRange": 70,
         "title": {
             "text": "Prosent",
             "style": {
                 "fontFamily": "Default",
                 "color": "#666666",
-                "fontSize": "14px",
-                "fontWeight": "normal",
-                "fontStyle": "normal"
-            }
-        },
-        "labels": {
-            "style": {
-                "fontSize": "15px"
+                "fontSize": "14px"
             }
         }
     },
-    "series": [
-        {
-            "name": "Stemmer svært dårlig",
-            "color": "#5573e6",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
-        },
-        {
-            "name": "Stemmer ganske dårlig",
-            "color": "#fa6e3c",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
-        },
-        {
-            "name": "Stemmer verken dårlig eller godt",
-            "color": "#fad250",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
-        },
-        {
-            "name": "Stemmer ganske godt",
-            "color": "#00785f",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
-        },
-        {
-            "name": "Vet ikke",
-            "color": "#7896ff",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
-        }
-    ],
-    "data": {
-        "csvURL": "",  
-        "enablePolling": true,
-        "dataRefreshRate": 60
-    },
-    "pane": {
-        "background": []
-    },
-    "responsive": {
-        "rules": []
-    },
-    "credits": {
-        "href": "",
-        "text": "NNNNNNNN=4125, CICEROs klimaundersøkelse"
-    },
+    "series": [],  // Series will be dynamically populated
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
-            "color": "#333333",
             "fontSize": "14px",
-            "fontWeight": "bold",
-            "fontStyle": "normal",
-            "cursor": "pointer"
+            "fontWeight": "bold"
         }
+    },
+    "credits": {
+        "href": "",
+        "text": ""  // Credits will be dynamically populated
     }
 }
