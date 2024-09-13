@@ -24,14 +24,14 @@
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
-    // Render line chart with data from /data/
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'line', 'lineChartContainer', 'columns.json');
+    // Render line chart with data from /data/ using linechart.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'line', 'lineChartContainer', 'linechart.json');
 
-    // Render gender distribution chart with data from /data/kjonn/
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
 
-    // Render age distribution chart with data from /data/alder/
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+    // Render age distribution chart with data from /data/alder/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns.json');
 }
 
 // Function to load and render a chart in a specific container
@@ -39,7 +39,7 @@ function renderChart(csvURL, chartType, container, jsonFile) {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
-            // Set the chart type (line or column)
+            // Set the chart type based on the provided type (line or column)
             styleConfig.chart.type = chartType;
 
             // Load CSV data into the chart configuration
@@ -49,7 +49,7 @@ function renderChart(csvURL, chartType, container, jsonFile) {
                 dataRefreshRate: 60  // Refresh every 60 seconds
             };
 
-            // Render the chart in the given container
+            // Render the chart in the specified container
             Highcharts.chart(container, styleConfig);
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
@@ -76,7 +76,7 @@ function populateDropdown() {
 
             // Automatically render the first dataset if available
             if (dropdown.options.length > 0) {
-                renderCharts(dropdown.value);  // Render the first chart on page load
+                renderCharts(dropdown.value);  // Render the first charts on page load
             }
         })
         .catch(error => console.error('Error fetching questions:', error));
