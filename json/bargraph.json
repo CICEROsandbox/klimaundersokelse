@@ -1,4 +1,7 @@
 {
+  "chart": {
+    "type": "bar"  // Specify bar chart
+  },
   "title": {
     "text": "",
     "style": {
@@ -10,7 +13,7 @@
     "align": "left"
   },
   "xAxis": {
-    "type": "category"
+    "categories": []  // Will be populated dynamically by CSV data
   },
   "yAxis": {
     "title": {
@@ -23,49 +26,34 @@
     {
       "name": "Series 1",
       "color": "#00785f",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
+      "type": "bar"
     },
     {
       "name": "Series 2",
       "color": "#3250c8",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
+      "type": "bar"
     },
     {
       "name": "Series 3",
       "color": "#64d28c",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
+      "type": "bar"
     },
     {
       "name": "Series 4",
       "color": "#5573e6",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
-    },
-    {
-      "name": "Series 5",
-      "color": "#fa6e3c",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
-    },
-    {
-      "name": "Series 6",
-      "color": "#fad250",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
-    },
-    {
-      "name": "Series 7",
-      "color": "#7896ff",
-      "type": "bar",  // Change to "bar"
-      "marker": { "enabled": false }
+      "type": "bar"
     }
   ],
-  "credits": {
-    "href": "",
-    "text": ""
+  "plotOptions": {
+    "series": {
+      "animation": false
+    },
+    "bar": {
+      "dataLabels": {
+        "enabled": true
+      },
+      "grouping": true  // Ensure grouping for side-by-side bars
+    }
   },
   "legend": {
     "itemStyle": {
@@ -73,14 +61,8 @@
       "fontFamily": "Averta"
     }
   },
-  "plotOptions": {
-    "series": {
-      "animation": false
-    },
-    "bar": {  // Additional options for bar charts
-      "dataLabels": {
-        "enabled": true
-      }
-    }
+  "credits": {
+    "href": "",
+    "text": ""
   }
 }
