@@ -17,7 +17,6 @@
 <div id="container" style="width:100%; height:400px;"></div>
 
 <script>
-// Function to load and render a chart based on the selected CSV
 // Function to load and render a bar chart based on the selected CSV
 function renderChart(csvURL) {
     const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
@@ -28,14 +27,18 @@ function renderChart(csvURL) {
             // Set the chart title dynamically based on the selected CSV file name
             styleConfig.title.text = `${fileName}`;
 
-            // Load the CSV data and map it to the bar chart
+            // Add the data loading configuration to the styleConfig
             styleConfig.data = {
                 csvURL: csvURL,  // Use the selected CSV URL
+                enablePolling: true,
+                dataRefreshRate: 60, // Refresh every 60 seconds
                 complete: function (csvData) {
+                    console.log("CSV Data loaded:", csvData);  // Add debugging to see the loaded CSV data
+
+                    // Check if categories and series are being extracted correctly
                     const categories = [];
                     const seriesData = [];
 
-                    // Extract the categories (first column) and the series data
                     csvData.forEach((row, index) => {
                         if (index === 0) {
                             // First row contains the series names (headers)
@@ -54,6 +57,9 @@ function renderChart(csvURL) {
                             }
                         }
                     });
+
+                    console.log("Categories:", categories);
+                    console.log("Series Data:", seriesData);
 
                     // Update the chart config with the parsed categories and series data
                     styleConfig.xAxis.categories = categories;
@@ -84,7 +90,6 @@ function renderChart(csvURL) {
         })
         .catch(error => console.error('Error loading style config:', error));
 }
-
 
 // Function to populate the dropdown with CSV files from the GitHub API
 function populateDropdown() {
