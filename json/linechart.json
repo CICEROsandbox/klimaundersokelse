@@ -75,7 +75,7 @@
         {
             "name": "Vet ikke",
             "color": "#9b59b6",
-            "marker": {  },
+            "marker": { "enabled": false },
             "lineWidth": 3  
         }
     ],
