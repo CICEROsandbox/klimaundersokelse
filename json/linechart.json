@@ -2,11 +2,23 @@
     "chart": {
         "type": "line"
     },
+    "title": {
+        "text": "",  // This will be dynamically populated
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold"
+        },
+        "align": "left"
+    },
     "xAxis": {
         "type": "category",
         "labels": {
             "style": {
-                "fontSize": "14px"
+                "fontSize": "14px",
+                "fontFamily": "Averta",
+                "color": "#666666"
             }
         }
     },
@@ -16,22 +28,39 @@
         "title": {
             "text": "Prosent",
             "style": {
-                "fontFamily": "Default",
+                "fontFamily": "Averta",
                 "color": "#666666",
-                "fontSize": "14px"
+                "fontSize": "14px",
+                "fontWeight": "normal"
+            }
+        },
+        "labels": {
+            "style": {
+                "fontSize": "14px",
+                "fontFamily": "Averta"
             }
         }
     },
-    "series": [],
+    "series": [],  // Series data and names will be populated dynamically
     "legend": {
         "itemStyle": {
             "fontFamily": "Averta",
+            "color": "#333333",
             "fontSize": "14px",
             "fontWeight": "bold"
         }
     },
     "credits": {
         "href": "",
-        "text": ""
+        "text": ""  // This will be dynamically populated
+    },
+    "plotOptions": {
+        "line": {
+            "marker": {
+                "enabled": true,
+                "symbol": "circle"
+            },
+            "lineWidth": 2
+        }
     }
 }
