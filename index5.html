@@ -61,7 +61,7 @@ function renderChart(csvURL) {
 
 // Function to populate the dropdown with CSV files from the GitHub API
 function populateDropdown() {
-    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/kjonn';
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/';
 
     fetch(apiURL)
         .then(response => response.json())
