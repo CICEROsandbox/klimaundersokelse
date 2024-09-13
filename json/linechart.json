@@ -46,37 +46,37 @@
             "name": "Stemmer svært dårlig",
             "color": "#5573e6",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3 
         },
         {
             "name": "Stemmer ganske dårlig",
             "color": "#fa6e3c",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3  
         },
         {
             "name": "Stemmer verken dårlig eller godt",
             "color": "#fad250",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3  
         },
         {
             "name": "Stemmer ganske godt",
             "color": "#00785f",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3  
         },
         {
             "name": "Stemmer svært godt",
             "color": "#7896ff",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3 
         },
         {
             "name": "Vet ikke",
             "color": "#9b59b6",
             "marker": { "symbol": "circle" },
-            "lineWidth": 3  // Thicker line
+            "lineWidth": 3  
         }
     ],
     "legend": {
