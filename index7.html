@@ -19,9 +19,11 @@
     <option value="">Loading questions...</option>
 </select>
 
+<!-- Button to toggle the visibility of series -->
+<button id="toggleSeriesButton" style="margin-top: 10px;">Show/Hide Series</button>
+
 <!-- Container to hold all three charts -->
 <div class="chart-container">
-    <!-- Chart containers, flexed side by side or stacked vertically based on screen size -->
     <div id="lineChartContainer" class="chart" style="width:100%; height:400px;"></div>
     <div id="genderChartContainer" class="chart" style="width:100%; height:400px;"></div>
     <div id="ageChartContainer" class="chart" style="width:100%; height:400px;"></div>
@@ -30,6 +32,9 @@
 <br>
 
 <script>
+let charts = [];  // Array to keep track of all rendered charts
+let areSeriesVisible = true;  // Flag to track the visibility state of the series
+
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
@@ -60,7 +65,8 @@ function renderChart(csvURL, chartType, container, jsonFile) {
             };
 
             // Render the chart in the specified container
-            Highcharts.chart(container, styleConfig);
+            const chart = Highcharts.chart(container, styleConfig);
+            charts.push(chart);  // Add the rendered chart to the charts array
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
@@ -86,7 +92,6 @@ function populateDropdown() {
 
             // Automatically render the first dataset if available
             if (dropdown.options.length > 0) {
-                dropdown.selectedIndex = 0;  // Select the first option
                 renderCharts(dropdown.value);  // Render the first charts on page load
             }
         })
@@ -96,6 +101,7 @@ function populateDropdown() {
 // Event listener for dropdown menu change
 document.getElementById('questionSelect').addEventListener('change', function () {
     const selectedQuestion = this.value;
+    charts = [];  // Reset charts array when a new question is selected
     if (selectedQuestion) {
         renderCharts(selectedQuestion);  // Render the charts with the selected question
     }
@@ -104,6 +110,19 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 // Populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
+});
+
+// Toggle series visibility function
+document.getElementById('toggleSeriesButton').addEventListener('click', function () {
+    areSeriesVisible = !areSeriesVisible;  // Toggle the visibility flag
+
+    // Loop through all rendered charts
+    charts.forEach(chart => {
+        chart.series.forEach(series => {
+            series.setVisible(areSeriesVisible, false);  // Show or hide each series without redrawing the chart
+        });
+        chart.redraw();  // Redraw the chart to apply visibility changes
+    });
 });
 </script>
 
