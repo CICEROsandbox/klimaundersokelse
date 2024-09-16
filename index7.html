@@ -30,35 +30,36 @@
 <br>
 
 <script>
-// Global variable to track selected series
-let selectedSeries = [];
+// Global variable to track selected series (e.g., "Stemmer svært dårlig")
+let selectedSeries = "";
 
-// Function to load and render all three charts based on the selected question
+// Function to load and render all three charts based on the selected question and series
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
     // Render line chart with data from /data/ using linechart.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json', selectedSeries);
 
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', selectedSeries);
 
     // Render age distribution chart with data from /data/alder/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
 }
 
-// Function to render a chart with the selected series
-function renderChart(csvURL, chartType, container, jsonFile) {
+// Function to render a chart and filter data based on selected series
+function renderChart(csvURL, chartType, container, jsonFile, selectedSeries) {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
             styleConfig.chart.type = chartType;
             styleConfig.data.csvURL = csvURL;
-            styleConfig.series = styleConfig.series.map((series, index) => {
-                // Set series visibility based on selected tags
+
+            // Filter series based on selectedSeries (e.g., "Stemmer svært dårlig")
+            styleConfig.series = styleConfig.series.map((series) => {
                 return {
                     ...series,
-                    visible: selectedSeries.includes(index)  // Show only if selected
+                    visible: series.name === selectedSeries || selectedSeries === "" // Show the selected series or all if none is selected
                 };
             });
 
@@ -67,43 +68,35 @@ function renderChart(csvURL, chartType, container, jsonFile) {
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
 
-// Function to create series selection tags
+// Function to create series selection tags (like "Stemmer svært dårlig", "Stemmer ganske dårlig")
 function createSeriesTags(seriesNames) {
     const seriesSelectContainer = document.getElementById('seriesSelect');
     seriesSelectContainer.innerHTML = '';  // Clear previous tags
 
-    seriesNames.forEach((name, index) => {
+    seriesNames.forEach((name) => {
         const tag = document.createElement('button');
         tag.textContent = name;
         tag.classList.add('series-tag');
-        tag.setAttribute('data-series-index', index);
 
-        // Add click event to toggle series visibility
+        // Add click event to toggle the series visibility
         tag.addEventListener('click', function() {
-            toggleSeriesVisibility(index, tag);
+            selectedSeries = name;  // Set the selected series
+            updateActiveTag(tag);  // Update the active tag styling
+            const question = document.getElementById('questionSelect').value;
+            if (question) {
+                renderCharts(question);  // Re-render the charts with the selected series
+            }
         });
 
         seriesSelectContainer.appendChild(tag);
     });
 }
 
-// Function to toggle series visibility
-function toggleSeriesVisibility(seriesIndex, tag) {
-    if (selectedSeries.includes(seriesIndex)) {
-        // Remove series if already selected
-        selectedSeries = selectedSeries.filter(index => index !== seriesIndex);
-        tag.classList.remove('active');
-    } else {
-        // Add series if not already selected
-        selectedSeries.push(seriesIndex);
-        tag.classList.add('active');
-    }
-
-    // Re-render the charts with the updated series visibility
-    const question = document.getElementById('questionSelect').value;
-    if (question) {
-        renderCharts(question);
-    }
+// Function to update the active tag styling
+function updateActiveTag(activeTag) {
+    const tags = document.querySelectorAll('.series-tag');
+    tags.forEach(tag => tag.classList.remove('active'));  // Remove 'active' class from all tags
+    activeTag.classList.add('active');  // Add 'active' class to the clicked tag
 }
 
 // Populate the dropdown and series tags based on the first question selected
@@ -128,7 +121,6 @@ function populateDropdown() {
             // Automatically render the first dataset and create series tags
             if (dropdown.options.length > 0) {
                 const firstQuestion = dropdown.options[0].value;
-                // Assuming these are the series names to show
                 const seriesNames = ["Stemmer svært dårlig", "Stemmer ganske dårlig", "Stemmer verken dårlig eller godt", "Stemmer ganske godt", "Vet ikke"];
                 createSeriesTags(seriesNames);  // Create series selection tags
                 renderCharts(firstQuestion);  // Render the first charts on page load
