@@ -12,32 +12,43 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* Ensure the container takes up the full width */
+        /* Flexbox layout for charts */
         .chart-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
         }
 
-        /* Line chart takes full width */
         #lineChartContainer {
             width: 100%;
         }
 
-        /* Bar charts take 50% width */
         #genderChartContainer, #ageChartContainer {
             width: 50%;
         }
 
-        /* Add some margin to the dropdown and button */
-        #questionSelect, #toggleCategoryLabelsButton {
+        #categoryButtons {
             margin-bottom: 20px;
         }
 
-        /* Ensure responsiveness on smaller screens */
+        #categoryButtons button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        #categoryButtons button.active {
+            background-color: #00785f;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             #genderChartContainer, #ageChartContainer {
-                width: 100%; /* On smaller screens, stack the bar charts vertically */
+                width: 100%;
             }
         }
     </style>
@@ -50,8 +61,8 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Button to toggle the visibility of category labels -->
-<button id="toggleCategoryLabelsButton" style="margin-top: 10px;">Toggle Category Labels</button>
+<!-- Buttons to toggle the categories -->
+<div id="categoryButtons"></div>
 
 <!-- Container to hold all three charts -->
 <div class="chart-container">
@@ -64,7 +75,54 @@
 
 <script>
 let charts = [];  // Array to keep track of all rendered charts
-let areLabelsVisible = true;  // Flag to track the visibility state of category labels
+let activeCategories = {};  // Store the active/inactive state of each category
+
+const categories = [
+    "Ikke kommentert / I svært liten grad",
+    "I ganske liten grad",
+    "I verken liten eller stor grad",
+    "I ganske stor grad",
+    "I svært stor grad",
+    "Vet ikke"
+];
+
+// Function to render buttons for categories
+function createCategoryButtons() {
+    const buttonContainer = document.getElementById('categoryButtons');
+    buttonContainer.innerHTML = '';  // Clear any existing buttons
+
+    categories.forEach((category, index) => {
+        const button = document.createElement('button');
+        button.textContent = category;
+        button.classList.add('active');  // Initially all categories are active
+        button.setAttribute('data-index', index);
+        activeCategories[index] = true;  // All categories start as active
+
+        // Add event listener to toggle visibility
+        button.addEventListener('click', function() {
+            const isActive = activeCategories[index];
+            toggleCategory(index, !isActive);
+            this.classList.toggle('active', !isActive);  // Update button appearance
+        });
+
+        buttonContainer.appendChild(button);
+    });
+}
+
+// Function to toggle the visibility of a category across both bar charts
+function toggleCategory(categoryIndex, show) {
+    activeCategories[categoryIndex] = show;
+
+    charts.forEach(chart => {
+        chart.series.forEach(series => {
+            const point = series.data[categoryIndex];
+            if (point) {
+                point.update({ y: show ? point.oldY : 0 }, false);  // Show or hide category
+            }
+        });
+        chart.redraw();  // Redraw chart after updating points
+    });
+}
 
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
@@ -78,6 +136,9 @@ function renderCharts(question) {
 
     // Render age distribution chart with data from /data/alder/ using columns.json
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+
+    // Create category toggle buttons
+    createCategoryButtons();
 }
 
 // Function to load and render a chart in a specific container
@@ -98,6 +159,15 @@ function renderChart(csvURL, chartType, container, jsonFile) {
             // Render the chart in the specified container
             const chart = Highcharts.chart(container, styleConfig);
             charts.push(chart);  // Add the rendered chart to the charts array
+
+            // Store initial values for toggling
+            chart.series.forEach(series => {
+                series.data.forEach(point => {
+                    if (!point.oldY) {
+                        point.oldY = point.y;  // Save the original y value for toggling
+                    }
+                });
+            });
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
@@ -141,20 +211,6 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 // Populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
-});
-
-// Toggle category labels visibility function
-document.getElementById('toggleCategoryLabelsButton').addEventListener('click', function () {
-    areLabelsVisible = !areLabelsVisible;  // Toggle the visibility flag
-
-    // Loop through all rendered charts
-    charts.forEach(chart => {
-        chart.xAxis[0].update({
-            labels: {
-                enabled: areLabelsVisible  // Show or hide the x-axis category labels
-            }
-        });
-    });
 });
 </script>
 
