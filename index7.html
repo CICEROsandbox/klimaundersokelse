@@ -19,8 +19,8 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Button to toggle the visibility of series -->
-<button id="toggleSeriesButton" style="margin-top: 10px;">Show/Hide Series</button>
+<!-- Button to toggle the visibility of categories -->
+<button id="toggleCategoriesButton" style="margin-top: 10px;">Toggle Categories</button>
 
 <!-- Container to hold all three charts -->
 <div class="chart-container">
@@ -33,7 +33,7 @@
 
 <script>
 let charts = [];  // Array to keep track of all rendered charts
-let areSeriesVisible = true;  // Flag to track the visibility state of the series
+let areCategoriesVisible = true;  // Flag to track the visibility state of categories
 
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
@@ -112,14 +112,23 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 
-// Toggle series visibility function
-document.getElementById('toggleSeriesButton').addEventListener('click', function () {
-    areSeriesVisible = !areSeriesVisible;  // Toggle the visibility flag
+// Toggle categories visibility function
+document.getElementById('toggleCategoriesButton').addEventListener('click', function () {
+    areCategoriesVisible = !areCategoriesVisible;  // Toggle the visibility flag
 
     // Loop through all rendered charts
     charts.forEach(chart => {
+        // Iterate over each series (e.g., Mann/Kvinne)
         chart.series.forEach(series => {
-            series.setVisible(areSeriesVisible, false);  // Show or hide each series without redrawing the chart
+            // Loop through each category's data points
+            series.data.forEach((point, index) => {
+                if (areCategoriesVisible) {
+                    point.update({ y: point.oldY || point.y }, false);  // Restore the original value
+                } else {
+                    point.oldY = point.y;  // Store the current value before hiding
+                    point.update({ y: 0 }, false);  // Hide the data point by setting it to 0
+                }
+            });
         });
         chart.redraw();  // Redraw the chart to apply visibility changes
     });
