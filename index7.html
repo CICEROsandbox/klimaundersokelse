@@ -19,174 +19,90 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Container for series selection (tags for bar charts only) -->
-<div id="seriesSelect" class="series-select-container"></div>
-
 <!-- Container to hold all three charts -->
 <div class="chart-container">
-    <div id="lineChartContainer" class="chart"></div>
-    <div id="genderChartContainer" class="chart"></div>
-    <div id="ageChartContainer" class="chart"></div>
+    <!-- Chart containers, flexed side by side or stacked vertically based on screen size -->
+    <div id="lineChartContainer" class="chart" style="width:100%; height:400px;"></div>
+    <div id="genderChartContainer" class="chart" style="width:100%; height:400px;"></div>
+    <div id="ageChartContainer" class="chart" style="width:100%; height:400px;"></div>
 </div>
 
 <br>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Global variable to track selected series (e.g., "Stemmer svært dårlig") for bar charts
-    let selectedSeries = "";
+// Function to load and render all three charts based on the selected question
+function renderCharts(question) {
+    const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
-    // Function to load and render all three charts based on the selected question
-    function renderCharts(question) {
-        console.log('Rendering charts for question:', question);
+    // Render line chart with data from /data/ using linechart.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
-        const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
 
-        // Render line chart with data from /data/ using linechart.json (no filtering here)
-        renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
+    // Render age distribution chart with data from /data/alder/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+}
 
-        // Render gender distribution chart with data from /data/kjonn/ using columns.json
-        renderFilteredChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', selectedSeries);
+// Function to load and render a chart in a specific container
+function renderChart(csvURL, chartType, container, jsonFile) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            // Set the chart type based on the provided type (line or column)
+            styleConfig.chart.type = chartType;
 
-        // Render age distribution chart with data from /data/alder/ using columns.json
-        renderFilteredChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
-    }
+            // Load CSV data into the chart configuration
+            styleConfig.data = {
+                csvURL: csvURL,
+                enablePolling: true,
+                dataRefreshRate: 60  // Refresh every 60 seconds
+            };
 
-    // Function to render the line chart (without filtering)
-    function renderChart(csvURL, chartType, container, jsonFile) {
-        console.log('Rendering line chart:', container);
+            // Render the chart in the specified container
+            Highcharts.chart(container, styleConfig);
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
 
-        fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to load JSON config for ${jsonFile}`);
-                }
-                return response.json();
-            })
-            .then(styleConfig => {
-                styleConfig.chart.type = chartType;
-                styleConfig.data.csvURL = csvURL;
+// Function to populate the dropdown with available questions
+function populateDropdown() {
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
 
-                Highcharts.chart(container, styleConfig);
-            })
-            .catch(error => console.error(`Error loading ${jsonFile}:`, error));
-    }
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('questionSelect');
+            dropdown.innerHTML = '';  // Clear the loading message
 
-    // Function to render a chart with optional filtering for bar charts (selected series)
-    function renderFilteredChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
-        console.log('Rendering chart:', container, 'Selected series:', selectedSeries);
-
-        fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to load JSON config for ${jsonFile}`);
-                }
-                return response.json();
-            })
-            .then(styleConfig => {
-                styleConfig.chart.type = chartType;
-                styleConfig.data.csvURL = csvURL;
-
-                console.log('Chart configuration loaded for', container);
-
-                // Apply filtering for bar charts (gender and age) to show only the selected series data but keep "mann/kvinne" or age groups.
-                if (selectedSeries !== "") {
-                    console.log('Applying filtering for:', selectedSeries);
-                    // Adjust the data source based on the selected series
-                    styleConfig.data.complete = function(options) {
-                        const filteredData = options.series.map((series) => {
-                            // Filter only the data for the selected series
-                            if (series.name === "Mann" || series.name === "Kvinne" || series.name.includes("Alder")) {
-                                series.data = series.data.map((point, index) => {
-                                    if (point.name === selectedSeries) {
-                                        return point;  // Keep only the points for the selected series
-                                    } else {
-                                        return { ...point, y: null };  // Hide the other points
-                                    }
-                                });
-                            }
-                            return series;
-                        });
-                        options.series = filteredData;
-                    };
-                }
-
-                Highcharts.chart(container, styleConfig);
-            })
-            .catch(error => console.error(`Error loading ${jsonFile}:`, error));
-    }
-
-    // Function to create series selection tags (for bar charts only)
-    function createSeriesTags(seriesNames) {
-        const seriesSelectContainer = document.getElementById('seriesSelect');
-        seriesSelectContainer.innerHTML = '';  // Clear previous tags
-
-        seriesNames.forEach((name) => {
-            const tag = document.createElement('button');
-            tag.textContent = name;
-            tag.classList.add('series-tag');
-
-            // Add click event to toggle the series visibility for bar charts
-            tag.addEventListener('click', function() {
-                selectedSeries = name;  // Set the selected series for bar charts
-                updateActiveTag(tag);  // Update the active tag styling
-                const question = document.getElementById('questionSelect').value;
-                if (question) {
-                    console.log('Re-rendering charts for selected series:', selectedSeries);
-                    renderCharts(question);  // Re-render the charts with the selected series for bar charts
+            data.forEach(file => {
+                if (file.name.endsWith('.csv')) {  // Only include CSV files
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
+                    dropdown.appendChild(option);
                 }
             });
 
-            seriesSelectContainer.appendChild(tag);
-        });
+            // Automatically render the first dataset if available
+            if (dropdown.options.length > 0) {
+                dropdown.selectedIndex = 0;  // Select the first option
+                renderCharts(dropdown.value);  // Render the first charts on page load
+            }
+        })
+        .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Event listener for dropdown menu change
+document.getElementById('questionSelect').addEventListener('change', function () {
+    const selectedQuestion = this.value;
+    if (selectedQuestion) {
+        renderCharts(selectedQuestion);  // Render the charts with the selected question
     }
+});
 
-    // Function to update the active tag styling
-    function updateActiveTag(activeTag) {
-        const tags = document.querySelectorAll('.series-tag');
-        tags.forEach(tag => tag.classList.remove('active'));  // Remove 'active' class from all tags
-        activeTag.classList.add('active');  // Add 'active' class to the clicked tag
-    }
-
-    // Populate the dropdown and series tags based on the first question selected
-    function populateDropdown() {
-        const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
-
-        fetch(apiURL)
-            .then(response => response.json())
-            .then(data => {
-                const dropdown = document.getElementById('questionSelect');
-                dropdown.innerHTML = '';  // Clear the loading message
-
-                data.forEach(file => {
-                    if (file.name.endsWith('.csv')) {  // Only include CSV files
-                        const option = document.createElement('option');
-                        option.value = file.name;
-                        option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
-                        dropdown.appendChild(option);
-                    }
-                });
-
-                // Automatically render the first dataset and create series tags for bar charts
-                if (dropdown.options.length > 0) {
-                    const firstQuestion = dropdown.options[0].value;
-                    const seriesNames = ["Stemmer svært dårlig", "Stemmer ganske dårlig", "Stemmer verken dårlig eller godt", "Stemmer ganske godt", "Vet ikke"];
-                    createSeriesTags(seriesNames);  // Create series selection tags (for bar charts only)
-                    renderCharts(firstQuestion);  // Render the first charts on page load
-                }
-            })
-            .catch(error => console.error('Error fetching questions:', error));
-    }
-
-    // Event listener for dropdown menu change
-    document.getElementById('questionSelect').addEventListener('change', function () {
-        const selectedQuestion = this.value;
-        if (selectedQuestion) {
-            renderCharts(selectedQuestion);  // Render the charts with the selected question
-        }
-    });
-
-    // Populate the dropdown when the page loads
+// Populate the dropdown when the page loads
+document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 </script>
