@@ -35,16 +35,6 @@
 let charts = [];  // Array to keep track of all rendered charts
 let areLabelsVisible = true;  // Flag to track the visibility state of category labels
 
-// Common categories to synchronize the x-axis
-const commonCategories = [
-    "Ikke kommentert / I svært liten grad", 
-    "I ganske liten grad", 
-    "I verken liten eller stor grad", 
-    "I ganske stor grad", 
-    "I svært stor grad", 
-    "Vet ikke"
-];
-
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
@@ -66,20 +56,6 @@ function renderChart(csvURL, chartType, container, jsonFile) {
         .then(styleConfig => {
             // Set the chart type based on the provided type (line or column)
             styleConfig.chart.type = chartType;
-
-            // Ensure the charts share the same x-axis categories for alignment
-            styleConfig.xAxis = {
-                categories: commonCategories,  // Use the common categories for x-axis
-                labels: {
-                    style: {
-                        fontSize: '12px',
-                        align: 'center'
-                    }
-                },
-                tickPositioner: function() {
-                    return Array.from({length: commonCategories.length}, (_, i) => i);  // Align ticks
-                }
-            };
 
             // Load CSV data into the chart configuration
             styleConfig.data = {
