@@ -5,6 +5,9 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -14,12 +17,12 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Containers for the three charts -->
+<!-- Containers for the three charts, centered by default with the above CSS -->
 <div id="lineChartContainer" style="width:800px; height:800px;"></div>
 <div id="genderChartContainer" style="width:800px; height:800px;"></div>
 <div id="ageChartContainer" style="width:800px; height:800px;"></div>
 
-    <br>
+<br>
 
 <script>
 // Function to load and render all three charts based on the selected question
