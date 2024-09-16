@@ -76,15 +76,7 @@
 <script>
 let charts = [];  // Array to keep track of all rendered charts
 let activeCategories = {};  // Store the active/inactive state of each category
-
-const categories = [
-    "Ikke kommentert / I svært liten grad",
-    "I ganske liten grad",
-    "I verken liten eller stor grad",
-    "I ganske stor grad",
-    "I svært stor grad",
-    "Vet ikke"
-];
+let categories = [];  // Store dynamic categories for each dataset
 
 // Function to render buttons for categories
 function createCategoryButtons() {
@@ -109,11 +101,12 @@ function createCategoryButtons() {
     });
 }
 
-// Function to toggle the visibility of a category across both bar charts
+// Function to toggle the visibility of a category across the bar charts only (gender and age)
 function toggleCategory(categoryIndex, show) {
     activeCategories[categoryIndex] = show;
 
-    charts.forEach(chart => {
+    // Apply the toggle only to the bar charts (second and third charts in the `charts` array)
+    charts.slice(1).forEach(chart => {  // Skip the first chart (line chart)
         chart.series.forEach(series => {
             const point = series.data[categoryIndex];
             if (point) {
@@ -128,17 +121,26 @@ function toggleCategory(categoryIndex, show) {
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
-    // Render line chart with data from /data/ using linechart.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
+    // Clear the charts array before rendering new charts
+    charts = [];
 
-    // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+    // Load CSV to extract categories dynamically before rendering charts
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`)
+        .then(response => response.text())
+        .then(csvText => {
+            const csvRows = csvText.split("\n").map(row => row.split(","));
+            categories = csvRows[0].slice(1);  // Extract the categories from the header row, excluding the first column
+            createCategoryButtons();  // Create the category toggle buttons dynamically
 
-    // Render age distribution chart with data from /data/alder/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+            // Render line chart with data from /data/ using linechart.json
+            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
-    // Create category toggle buttons
-    createCategoryButtons();
+            // Render gender distribution chart with data from /data/kjonn/ using columns.json
+            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+
+            // Render age distribution chart with data from /data/alder/ using columns.json
+            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+        });
 }
 
 // Function to load and render a chart in a specific container
