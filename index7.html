@@ -41,29 +41,39 @@ function renderCharts(question) {
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', selectedSeries);
+    renderFilteredChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', selectedSeries);
 
     // Render age distribution chart with data from /data/alder/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
+    renderFilteredChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
 }
 
 // Function to render a chart with optional filtering for bar charts (selected series)
-function renderChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
+function renderFilteredChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
             styleConfig.chart.type = chartType;
             styleConfig.data.csvURL = csvURL;
 
-            // Apply filtering only to bar charts (gender and age)
-            if (selectedSeries !== "" && (container === "genderChartContainer" || container === "ageChartContainer")) {
-                // Filter series based on the selected tag for bar charts
-                styleConfig.series = styleConfig.series.map((series) => {
-                    return {
-                        ...series,
-                        visible: series.name === selectedSeries  // Show only the selected series
-                    };
-                });
+            // Apply filtering for bar charts (gender and age) to show only the selected series data but keep "mann/kvinne" or age groups.
+            if (selectedSeries !== "") {
+                // Adjust the data source based on the selected series
+                styleConfig.data.complete = function(options) {
+                    const filteredData = options.series.map((series) => {
+                        // Filter only the data for the selected series
+                        if (series.name === "Mann" || series.name === "Kvinne" || series.name.includes("Alder")) {
+                            series.data = series.data.map((point, index) => {
+                                if (point.name === selectedSeries) {
+                                    return point;  // Keep only the points for the selected series
+                                } else {
+                                    return { ...point, y: null };  // Hide the other points
+                                }
+                            });
+                        }
+                        return series;
+                    });
+                    options.series = filteredData;
+                };
             }
 
             Highcharts.chart(container, styleConfig);
