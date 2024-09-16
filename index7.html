@@ -19,8 +19,8 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Button to toggle the visibility of categories -->
-<button id="toggleCategoriesButton" style="margin-top: 10px;">Toggle Categories</button>
+<!-- Button to toggle the visibility of category labels -->
+<button id="toggleCategoryLabelsButton" style="margin-top: 10px;">Toggle Category Labels</button>
 
 <!-- Container to hold all three charts -->
 <div class="chart-container">
@@ -33,7 +33,7 @@
 
 <script>
 let charts = [];  // Array to keep track of all rendered charts
-let areCategoriesVisible = true;  // Flag to track the visibility state of categories
+let areLabelsVisible = true;  // Flag to track the visibility state of category labels
 
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
@@ -112,25 +112,17 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 
-// Toggle categories visibility function
-document.getElementById('toggleCategoriesButton').addEventListener('click', function () {
-    areCategoriesVisible = !areCategoriesVisible;  // Toggle the visibility flag
+// Toggle category labels visibility function
+document.getElementById('toggleCategoryLabelsButton').addEventListener('click', function () {
+    areLabelsVisible = !areLabelsVisible;  // Toggle the visibility flag
 
     // Loop through all rendered charts
     charts.forEach(chart => {
-        // Iterate over each series (e.g., Mann/Kvinne)
-        chart.series.forEach(series => {
-            // Loop through each category's data points
-            series.data.forEach((point, index) => {
-                if (areCategoriesVisible) {
-                    point.update({ y: point.oldY || point.y }, false);  // Restore the original value
-                } else {
-                    point.oldY = point.y;  // Store the current value before hiding
-                    point.update({ y: 0 }, false);  // Hide the data point by setting it to 0
-                }
-            });
+        chart.xAxis[0].update({
+            labels: {
+                enabled: areLabelsVisible  // Show or hide the x-axis category labels
+            }
         });
-        chart.redraw();  // Redraw the chart to apply visibility changes
     });
 });
 </script>
