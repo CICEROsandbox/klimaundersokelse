@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Survey Results</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-<!-- Dropdown menu to select the question -->
-<label for="questionSelect">Velg spørsmål:</label>
-<select id="questionSelect">
-    <option value="">Loading questions...</option>
-</select>
-
-<!-- Container for series selection (tags for bar charts only) -->
-<div id="seriesSelect" class="series-select-container"></div>
-
-<!-- Container to hold all three charts -->
-<div class="chart-container">
-    <div id="lineChartContainer" class="chart"></div>
-    <div id="genderChartContainer" class="chart"></div>
-    <div id="ageChartContainer" class="chart"></div>
-</div>
-
-<br>
-
 <script>
 // Global variable to track selected series (e.g., "Stemmer svært dårlig") for bar charts
 let selectedSeries = "";
 
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
+    console.log('Rendering charts for question:', question);
+
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
     // Render line chart with data from /data/ using linechart.json (no filtering here)
@@ -47,16 +18,46 @@ function renderCharts(question) {
     renderFilteredChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
 }
 
-// Function to render a chart with optional filtering for bar charts (selected series)
-function renderFilteredChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
+// Function to render the line chart (without filtering)
+function renderChart(csvURL, chartType, container, jsonFile) {
+    console.log('Rendering line chart:', container);
+
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load JSON config for ${jsonFile}`);
+            }
+            return response.json();
+        })
         .then(styleConfig => {
             styleConfig.chart.type = chartType;
             styleConfig.data.csvURL = csvURL;
 
+            Highcharts.chart(container, styleConfig);
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+// Function to render a chart with optional filtering for bar charts (selected series)
+function renderFilteredChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
+    console.log('Rendering chart:', container, 'Selected series:', selectedSeries);
+
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load JSON config for ${jsonFile}`);
+            }
+            return response.json();
+        })
+        .then(styleConfig => {
+            styleConfig.chart.type = chartType;
+            styleConfig.data.csvURL = csvURL;
+
+            console.log('Chart configuration loaded for', container);
+
             // Apply filtering for bar charts (gender and age) to show only the selected series data but keep "mann/kvinne" or age groups.
             if (selectedSeries !== "") {
+                console.log('Applying filtering for:', selectedSeries);
                 // Adjust the data source based on the selected series
                 styleConfig.data.complete = function(options) {
                     const filteredData = options.series.map((series) => {
@@ -97,6 +98,7 @@ function createSeriesTags(seriesNames) {
             updateActiveTag(tag);  // Update the active tag styling
             const question = document.getElementById('questionSelect').value;
             if (question) {
+                console.log('Re-rendering charts for selected series:', selectedSeries);
                 renderCharts(question);  // Re-render the charts with the selected series for bar charts
             }
         });
@@ -155,6 +157,3 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 </script>
-
-</body>
-</html>
