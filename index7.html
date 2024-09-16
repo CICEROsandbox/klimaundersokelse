@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Results</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Dropdown menu to select the question -->
+<label for="questionSelect">Velg spørsmål:</label>
+<select id="questionSelect">
+    <option value="">Loading questions...</option>
+</select>
+
+<!-- Container for series selection (tags) -->
+<div id="seriesSelect" class="series-select-container"></div>
+
+<!-- Container to hold all three charts -->
+<div class="chart-container">
+    <div id="lineChartContainer" class="chart"></div>
+    <div id="genderChartContainer" class="chart"></div>
+    <div id="ageChartContainer" class="chart"></div>
+</div>
+
+<br>
+
+<script>
+// Global variable to track selected series
+let selectedSeries = [];
+
+// Function to load and render all three charts based on the selected question
+function renderCharts(question) {
+    const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+
+    // Render line chart with data from /data/ using linechart.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
+
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+
+    // Render age distribution chart with data from /data/alder/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+}
+
+// Function to render a chart with the selected series
+function renderChart(csvURL, chartType, container, jsonFile) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            styleConfig.chart.type = chartType;
+            styleConfig.data.csvURL = csvURL;
+            styleConfig.series = styleConfig.series.map((series, index) => {
+                // Set series visibility based on selected tags
+                return {
+                    ...series,
+                    visible: selectedSeries.includes(index)  // Show only if selected
+                };
+            });
+
+            Highcharts.chart(container, styleConfig);
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+// Function to create series selection tags
+function createSeriesTags(seriesNames) {
+    const seriesSelectContainer = document.getElementById('seriesSelect');
+    seriesSelectContainer.innerHTML = '';  // Clear previous tags
+
+    seriesNames.forEach((name, index) => {
+        const tag = document.createElement('button');
+        tag.textContent = name;
+        tag.classList.add('series-tag');
+        tag.setAttribute('data-series-index', index);
+
+        // Add click event to toggle series visibility
+        tag.addEventListener('click', function() {
+            toggleSeriesVisibility(index, tag);
+        });
+
+        seriesSelectContainer.appendChild(tag);
+    });
+}
+
+// Function to toggle series visibility
+function toggleSeriesVisibility(seriesIndex, tag) {
+    if (selectedSeries.includes(seriesIndex)) {
+        // Remove series if already selected
+        selectedSeries = selectedSeries.filter(index => index !== seriesIndex);
+        tag.classList.remove('active');
+    } else {
+        // Add series if not already selected
+        selectedSeries.push(seriesIndex);
+        tag.classList.add('active');
+    }
+
+    // Re-render the charts with the updated series visibility
+    const question = document.getElementById('questionSelect').value;
+    if (question) {
+        renderCharts(question);
+    }
+}
+
+// Populate the dropdown and series tags based on the first question selected
+function populateDropdown() {
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('questionSelect');
+            dropdown.innerHTML = '';  // Clear the loading message
+
+            data.forEach(file => {
+                if (file.name.endsWith('.csv')) {  // Only include CSV files
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
+                    dropdown.appendChild(option);
+                }
+            });
+
+            // Automatically render the first dataset and create series tags
+            if (dropdown.options.length > 0) {
+                const firstQuestion = dropdown.options[0].value;
+                // Assuming these are the series names to show
+                const seriesNames = ["Stemmer svært dårlig", "Stemmer ganske dårlig", "Stemmer verken dårlig eller godt", "Stemmer ganske godt", "Vet ikke"];
+                createSeriesTags(seriesNames);  // Create series selection tags
+                renderCharts(firstQuestion);  // Render the first charts on page load
+            }
+        })
+        .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Event listener for dropdown menu change
+document.getElementById('questionSelect').addEventListener('change', function () {
+    const selectedQuestion = this.value;
+    if (selectedQuestion) {
+        renderCharts(selectedQuestion);  // Render the charts with the selected question
+    }
+});
+
+// Populate the dropdown when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    populateDropdown();
+});
+</script>
+
+</body>
+</html>
