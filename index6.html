@@ -17,10 +17,13 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Containers for the three charts, centered by default with the above CSS -->
-<div id="lineChartContainer" style="width:800px; height:800px;"></div>
-<div id="genderChartContainer" style="width:800px; height:800px;"></div>
-<div id="ageChartContainer" style="width:800px; height:800px;"></div>
+<!-- Container to hold all three charts -->
+<div class="chart-container">
+    <!-- Chart containers, flexed side by side or stacked vertically based on screen size -->
+    <div id="lineChartContainer" class="chart"></div>
+    <div id="genderChartContainer" class="chart"></div>
+    <div id="ageChartContainer" class="chart"></div>
+</div>
 
 <br>
 
