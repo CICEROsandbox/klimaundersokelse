@@ -17,7 +17,7 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Container for series selection (tags) -->
+<!-- Container for series selection (tags for bar charts only) -->
 <div id="seriesSelect" class="series-select-container"></div>
 
 <!-- Container to hold all three charts -->
@@ -30,15 +30,15 @@
 <br>
 
 <script>
-// Global variable to track selected series (e.g., "Stemmer svært dårlig")
+// Global variable to track selected series (e.g., "Stemmer svært dårlig") for bar charts
 let selectedSeries = "";
 
-// Function to load and render all three charts based on the selected question and series
+// Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
-    // Render line chart with data from /data/ using linechart.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json', selectedSeries);
+    // Render line chart with data from /data/ using linechart.json (no filtering here)
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', selectedSeries);
@@ -47,28 +47,31 @@ function renderCharts(question) {
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', selectedSeries);
 }
 
-// Function to render a chart and filter data based on selected series
-function renderChart(csvURL, chartType, container, jsonFile, selectedSeries) {
+// Function to render a chart with optional filtering for bar charts (selected series)
+function renderChart(csvURL, chartType, container, jsonFile, selectedSeries = "") {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
             styleConfig.chart.type = chartType;
             styleConfig.data.csvURL = csvURL;
 
-            // Filter series based on selectedSeries (e.g., "Stemmer svært dårlig")
-            styleConfig.series = styleConfig.series.map((series) => {
-                return {
-                    ...series,
-                    visible: series.name === selectedSeries || selectedSeries === "" // Show the selected series or all if none is selected
-                };
-            });
+            // Apply filtering only to bar charts (gender and age)
+            if (selectedSeries !== "" && (container === "genderChartContainer" || container === "ageChartContainer")) {
+                // Filter series based on the selected tag for bar charts
+                styleConfig.series = styleConfig.series.map((series) => {
+                    return {
+                        ...series,
+                        visible: series.name === selectedSeries  // Show only the selected series
+                    };
+                });
+            }
 
             Highcharts.chart(container, styleConfig);
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
 
-// Function to create series selection tags (like "Stemmer svært dårlig", "Stemmer ganske dårlig")
+// Function to create series selection tags (for bar charts only)
 function createSeriesTags(seriesNames) {
     const seriesSelectContainer = document.getElementById('seriesSelect');
     seriesSelectContainer.innerHTML = '';  // Clear previous tags
@@ -78,13 +81,13 @@ function createSeriesTags(seriesNames) {
         tag.textContent = name;
         tag.classList.add('series-tag');
 
-        // Add click event to toggle the series visibility
+        // Add click event to toggle the series visibility for bar charts
         tag.addEventListener('click', function() {
-            selectedSeries = name;  // Set the selected series
+            selectedSeries = name;  // Set the selected series for bar charts
             updateActiveTag(tag);  // Update the active tag styling
             const question = document.getElementById('questionSelect').value;
             if (question) {
-                renderCharts(question);  // Re-render the charts with the selected series
+                renderCharts(question);  // Re-render the charts with the selected series for bar charts
             }
         });
 
@@ -118,11 +121,11 @@ function populateDropdown() {
                 }
             });
 
-            // Automatically render the first dataset and create series tags
+            // Automatically render the first dataset and create series tags for bar charts
             if (dropdown.options.length > 0) {
                 const firstQuestion = dropdown.options[0].value;
                 const seriesNames = ["Stemmer svært dårlig", "Stemmer ganske dårlig", "Stemmer verken dårlig eller godt", "Stemmer ganske godt", "Vet ikke"];
-                createSeriesTags(seriesNames);  // Create series selection tags
+                createSeriesTags(seriesNames);  // Create series selection tags (for bar charts only)
                 renderCharts(firstQuestion);  // Render the first charts on page load
             }
         })
