@@ -1,0 +1,21 @@
+/* Center the entire content */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+/* Center each chart container */
+#lineChartContainer, #genderChartContainer, #ageChartContainer {
+    margin: 20px 0;
+}
+
+/* Style the dropdown */
+select {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
