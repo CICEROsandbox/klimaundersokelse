@@ -4,35 +4,58 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh;
     margin: 0;
-}
-
-/* Center each chart container */
-#lineChartContainer, #genderChartContainer, #ageChartContainer {
-    margin: 20px 0;
 }
 
 /* Style the dropdown */
 select {
     padding: 12px;
     font-size: 16px;
-    font-family: 'Averta', sans-serif;  /* Use Averta font */
-    border-radius: 10px;  /* Rounded corners */
-    border: 2px solid #b0c4de;  /* Light blue border */
-    background-color: #f0f8ff;  /* Pale light blue background */
-    color: #333;  /* Text color */
+    font-family: 'Averta', sans-serif;
+    border-radius: 10px;
+    border: 2px solid #b0c4de;
+    background-color: #f0f8ff;
+    color: #333;
     outline: none;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
 }
 
-/* Add hover effect */
 select:hover {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* Soft shadow on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Add focus effect */
 select:focus {
-    box-shadow: 0px 0px 10px rgba(0, 128, 255, 0.5);  /* Light blue shadow when focused */
+    box-shadow: 0px 0px 10px rgba(0, 128, 255, 0.5);
+}
+
+/* Container for all charts */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;  /* Allows wrapping on smaller screens */
+    margin-top: 20px;
+    gap: 20px;  /* Space between charts */
+}
+
+/* Style each chart */
+.chart {
+    flex: 1;
+    min-width: 300px;  /* Minimum width for each chart */
+    max-width: 33%;  /* 3 charts side-by-side on large screens */
+    height: 500px;
+    margin: 10px;
+}
+
+/* Media query for smaller screens (tablets, phones) */
+@media (max-width: 1024px) {
+    .chart {
+        max-width: 100%;  /* Full width for smaller screens */
+    }
+
+    .chart-container {
+        flex-direction: column;  /* Stack the charts vertically */
+    }
 }
