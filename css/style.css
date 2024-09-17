@@ -17,8 +17,8 @@ html, body {
 }
 
 .heading-illustration {
-    max-width: 200px;  /* Set max width for the SVG */
-    margin-bottom: 20px;  /* Space between SVG and heading */
+    max-width: 200px; 
+    margin-bottom: 20px;
 }
 
 .heading-content h1 {
