@@ -17,7 +17,7 @@
     <div class="heading-container">
         <img src="grafikk/familiebilde2.svg" alt="CICERO Family Illustration" class="heading-illustration">
         <div class="heading-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
         </div>
     </div>
 
@@ -29,19 +29,22 @@
         </select>
     </div>
 
-    <!-- Container to hold all three charts -->
-    <div class="chart-container">
+    <!-- Container to hold all three charts, initially hidden -->
+    <div class="chart-container" style="display: none;">
         <div id="lineChartContainer" class="chart"></div>
         <div id="genderChartContainer" class="chart"></div>
         <div id="ageChartContainer" class="chart"></div>
     </div>
 
-    <br>
+<br>
 
 <script>
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+
+    // Show chart container
+    document.querySelector('.chart-container').style.display = 'block';
 
     // Render line chart with data from /data/ using linechart.json
     renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
@@ -58,17 +61,12 @@ function renderChart(csvURL, chartType, container, jsonFile) {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
-            // Set the chart type based on the provided type (line or column)
             styleConfig.chart.type = chartType;
-
-            // Load CSV data into the chart configuration
             styleConfig.data = {
                 csvURL: csvURL,
                 enablePolling: true,
-                dataRefreshRate: 60  // Refresh every 60 seconds
+                dataRefreshRate: 60
             };
-
-            // Render the chart in the specified container
             Highcharts.chart(container, styleConfig);
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
@@ -92,11 +90,6 @@ function populateDropdown() {
                     dropdown.appendChild(option);
                 }
             });
-
-            // Automatically render the first dataset if available
-            if (dropdown.options.length > 0) {
-                renderCharts(dropdown.value);  // Render the first charts on page load
-            }
         })
         .catch(error => console.error('Error fetching questions:', error));
 }
