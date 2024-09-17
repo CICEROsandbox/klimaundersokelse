@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Results</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
@@ -11,97 +13,34 @@
 </head>
 <body>
 
-<!-- Dropdown menu to select the question -->
-<label for="questionSelect">Velg spørsmål:</label>
-<select id="questionSelect">
-    <option value="">Loading questions...</option>
-</select>
+    <!-- SVG and Heading Section -->
+    <div class="heading-container">
+        <img src="grafikk/familiebilde2.svg" alt="CICERO Family Illustration" class="heading-illustration">
+        <div class="heading-content">
+            <h1>CICEROs KLIMAUNDERSØKELSE</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
 
-<!-- Container to hold all three charts, listed vertically -->
-<div class="chart-container">
-    <!-- Chart containers, displayed vertically -->
-    <div id="lineChartContainer" class="chart"></div> <!-- Utvikling over tid -->
-    <div id="genderChartContainer" class="chart"></div> <!-- Kjønn -->
-    <div id="ageChartContainer" class="chart"></div> <!-- Alder -->
-</div>
+    <!-- Dropdown menu to select the question -->
+    <div class="dropdown-container">
+        <label for="questionSelect">Velg spørsmål:</label>
+        <select id="questionSelect">
+            <option value="">Loading questions...</option>
+        </select>
+    </div>
 
-<br>
+    <!-- Container to hold all three charts -->
+    <div class="chart-container">
+        <div id="lineChartContainer" class="chart"></div>
+        <div id="genderChartContainer" class="chart"></div>
+        <div id="ageChartContainer" class="chart"></div>
+    </div>
+
+    <br>
 
 <script>
-// Function to load and render all three charts based on the selected question
-function renderCharts(question) {
-    const baseFileName = decodeURIComponent(question.replace('.csv', ''));
-
-    // Render line chart with data from /data/ using linechart.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
-
-    // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
-
-    // Render age distribution chart with data from /data/alder/ using columns.json
-    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
-}
-
-// Function to load and render a chart in a specific container
-function renderChart(csvURL, chartType, container, jsonFile) {
-    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
-        .then(response => response.json())
-        .then(styleConfig => {
-            // Set the chart type based on the provided type (line or column)
-            styleConfig.chart.type = chartType;
-
-            // Load CSV data into the chart configuration
-            styleConfig.data = {
-                csvURL: csvURL,
-                enablePolling: true,
-                dataRefreshRate: 60  // Refresh every 60 seconds
-            };
-
-            // Render the chart in the specified container
-            Highcharts.chart(container, styleConfig);
-        })
-        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
-}
-
-// Function to populate the dropdown with available questions
-function populateDropdown() {
-    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
-
-    fetch(apiURL)
-        .then(response => response.json())
-        .then(data => {
-            const dropdown = document.getElementById('questionSelect');
-            dropdown.innerHTML = '';  // Clear the loading message
-
-            data.forEach(file => {
-                if (file.name.endsWith('.csv')) {  // Only include CSV files
-                    const option = document.createElement('option');
-                    option.value = file.name;
-                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
-                    dropdown.appendChild(option);
-                }
-            });
-
-            // Automatically render the first dataset if available
-            if (dropdown.options.length > 0) {
-                renderCharts(dropdown.value);  // Render the first charts on page load
-            }
-        })
-        .catch(error => console.error('Error fetching questions:', error));
-}
-
-// Event listener for dropdown menu change
-document.getElementById('questionSelect').addEventListener('change', function () {
-    const selectedQuestion = this.value;
-    if (selectedQuestion) {
-        renderCharts(selectedQuestion);  // Render the charts with the selected question
-    }
-});
-
-// Populate the dropdown when the page loads
-document.addEventListener('DOMContentLoaded', function () {
-    populateDropdown();
-});
+// Your existing script to load the charts will go here...
 </script>
 
 </body>
