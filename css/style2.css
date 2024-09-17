@@ -1,0 +1,79 @@
+/* Center the entire content with better alignment and layout for charts */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;  /* Add some padding to prevent elements from touching screen edges */
+    background-color: #f9f9f9;  /* Light background for contrast */
+}
+
+/* Style the dropdown menu */
+select {
+    padding: 12px;
+    font-size: 16px;
+    font-family: 'Averta', sans-serif;
+    border-radius: 10px;
+    border: 2px solid #b0c4de;
+    background-color: #f0f8ff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+select:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+select:focus {
+    box-shadow: 0px 0px 10px rgba(0, 128, 255, 0.5);
+}
+
+/* Flex container for all charts */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;  /* Allows wrapping on smaller screens */
+    margin-top: 20px;
+    gap: 20px;  /* Adds space between charts */
+    width: 100%;  /* Ensures container spans full width */
+    max-width: 1200px;  /* Restrict the maximum width of the entire content */
+}
+
+/* Style each chart */
+.chart {
+    flex: 1;  /* Charts expand equally within the container */
+    min-width: 300px;  /* Minimum width to ensure readability */
+    max-width: 100%;  /* Maximum width to ensure charts don't overflow */
+    height: 500px;  /* Height for the charts */
+    margin: 10px;
+}
+
+/* Media query for smaller screens (tablets, phones) */
+@media (max-width: 1024px) {
+    .chart-container {
+        flex-direction: column;  /* Stack the charts vertically on smaller screens */
+        align-items: center;
+    }
+
+    .chart {
+        max-width: 90%;  /* Ensure charts stay readable on smaller screens */
+    }
+}
+
+/* Media query for very small screens (phones) */
+@media (max-width: 600px) {
+    .chart {
+        min-width: 100%;  /* Full width for very small screens */
+        height: 400px;  /* Reduce chart height for better readability */
+    }
+
+    select {
+        font-size: 14px;  /* Reduce dropdown size for small screens */
+        padding: 10px;
+    }
+}
