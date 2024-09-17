@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Results</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
@@ -10,48 +8,6 @@
 
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-        /* Flexbox layout for charts */
-        .chart-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        #lineChartContainer {
-            width: 100%;
-        }
-
-        #genderChartContainer, #ageChartContainer {
-            width: 50%;
-        }
-
-        #categoryButtons {
-            margin-bottom: 20px;
-        }
-
-        #categoryButtons button {
-            margin-right: 10px;
-            margin-bottom: 10px;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-
-        #categoryButtons button.active {
-            background-color: #00785f;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            #genderChartContainer, #ageChartContainer {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -61,86 +17,29 @@
     <option value="">Loading questions...</option>
 </select>
 
-<!-- Buttons to toggle the categories -->
-<div id="categoryButtons"></div>
-
-<!-- Container to hold all three charts -->
+<!-- Container to hold all three charts, listed vertically -->
 <div class="chart-container">
-    <div id="lineChartContainer" class="chart" style="height:400px;"></div>
-    <div id="genderChartContainer" class="chart" style="height:400px;"></div>
-    <div id="ageChartContainer" class="chart" style="height:400px;"></div>
+    <!-- Chart containers, displayed vertically -->
+    <div id="lineChartContainer" class="chart"></div> <!-- Utvikling over tid -->
+    <div id="genderChartContainer" class="chart"></div> <!-- Kjønn -->
+    <div id="ageChartContainer" class="chart"></div> <!-- Alder -->
 </div>
 
 <br>
 
 <script>
-let charts = [];  // Array to keep track of all rendered charts
-let activeCategories = {};  // Store the active/inactive state of each category
-let categories = [];  // Store dynamic categories for each dataset
-
-// Function to render buttons for categories
-function createCategoryButtons() {
-    const buttonContainer = document.getElementById('categoryButtons');
-    buttonContainer.innerHTML = '';  // Clear any existing buttons
-
-    categories.forEach((category, index) => {
-        const button = document.createElement('button');
-        button.textContent = category;
-        button.classList.add('active');  // Initially all categories are active
-        button.setAttribute('data-index', index);
-        activeCategories[index] = true;  // All categories start as active
-
-        // Add event listener to toggle visibility
-        button.addEventListener('click', function() {
-            const isActive = activeCategories[index];
-            toggleCategory(index, !isActive);
-            this.classList.toggle('active', !isActive);  // Update button appearance
-        });
-
-        buttonContainer.appendChild(button);
-    });
-}
-
-// Function to toggle the visibility of a category across the bar charts only (gender and age)
-function toggleCategory(categoryIndex, show) {
-    activeCategories[categoryIndex] = show;
-
-    // Apply the toggle only to the bar charts (second and third charts in the `charts` array)
-    charts.slice(1).forEach(chart => {  // Skip the first chart (line chart)
-        chart.series.forEach(series => {
-            const point = series.data[categoryIndex];
-            if (point) {
-                point.update({ y: show ? point.oldY : 0 }, false);  // Show or hide category
-            }
-        });
-        chart.redraw();  // Redraw chart after updating points
-    });
-}
-
 // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
-    // Clear the charts array before rendering new charts
-    charts = [];
+    // Render line chart with data from /data/ using linechart.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
 
-    // Load CSV to extract categories dynamically before rendering charts
-    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`)
-        .then(response => response.text())
-        .then(csvText => {
-            const csvRows = csvText.split("\n").map(row => row.split(","));
-            categories = csvRows[0].slice(1);  // Extract the categories from the header row, excluding the first column
-            createCategoryButtons();  // Create the category toggle buttons dynamically
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
 
-            // Render line chart with data from /data/ using linechart.json
-            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
-
-            // Render gender distribution chart with data from /data/kjonn/ using columns.json
-            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
-
-            // Render age distribution chart with data from /data/alder/ using columns.json
-            renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
-        });
+    // Render age distribution chart with data from /data/alder/ using columns.json
+    renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
 }
 
 // Function to load and render a chart in a specific container
@@ -159,17 +58,7 @@ function renderChart(csvURL, chartType, container, jsonFile) {
             };
 
             // Render the chart in the specified container
-            const chart = Highcharts.chart(container, styleConfig);
-            charts.push(chart);  // Add the rendered chart to the charts array
-
-            // Store initial values for toggling
-            chart.series.forEach(series => {
-                series.data.forEach(point => {
-                    if (!point.oldY) {
-                        point.oldY = point.y;  // Save the original y value for toggling
-                    }
-                });
-            });
+            Highcharts.chart(container, styleConfig);
         })
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
@@ -204,7 +93,6 @@ function populateDropdown() {
 // Event listener for dropdown menu change
 document.getElementById('questionSelect').addEventListener('change', function () {
     const selectedQuestion = this.value;
-    charts = [];  // Reset charts array when a new question is selected
     if (selectedQuestion) {
         renderCharts(selectedQuestion);  // Render the charts with the selected question
     }
