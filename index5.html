@@ -1,100 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Highcharts CSV Dynamic Update</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Highcharts as JSON</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
 
-<!-- Dropdown menu to select CSV files -->
-<label for="csvSelect">Velg påstand:</label>
-<select id="csvSelect">
-    <option value="">Loading datasets...</option>
-</select>
+<!-- Button to download the JSON -->
+<button id="exportJsonButton">Download Chart as JSON</button>
 
+<!-- Container for your chart -->
 <div id="container" style="width:100%; height:400px;"></div>
 
 <script>
-// Function to load and render a chart based on the selected CSV and columns.json configuration
-function renderChart(csvURL) {
-    const fileName = decodeURIComponent(csvURL.split('/').pop().replace('.csv', ''));
-
-    // Fetch the columns.json configuration for chart styling
-    fetch('https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/columns.json')
-        .then(response => response.json())
-        .then(styleConfig => {
-            // Set the chart title dynamically based on the selected CSV file name
-            styleConfig.title.text = `${fileName}`;
-
-            // Dynamically load the CSV data into the chart configuration
-            styleConfig.data = {
-                csvURL: csvURL,  // Use the selected CSV URL
-                enablePolling: true,
-                dataRefreshRate: 60  // Refresh every 60 seconds
-            };
-
-            // Fetch the corresponding credit from a .txt file
-            const creditURL = `https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/credits/${fileName}.txt`;
-            fetch(creditURL)
-                .then(response => response.text())
-                .then(creditText => {
-                    // Set the chart credits dynamically
-                    styleConfig.credits = {
-                        text: creditText,
-                        href: ''  // If there's no URL link, keep href empty
-                    };
-
-                    // Initialize the Highcharts chart with the combined configuration
-                    Highcharts.chart('container', styleConfig);
-                })
-                .catch(error => {
-                    console.error('Error fetching credits:', error);
-                    // Fallback if no credit file is found
-                    styleConfig.credits = { text: 'No credits available' };
-                    Highcharts.chart('container', styleConfig);
-                });
-        })
-        .catch(error => console.error('Error loading style config:', error));
-}
-
-// Function to populate the dropdown with CSV files from the GitHub API
-function populateDropdown() {
-    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data/alder';
-
-    fetch(apiURL)
-        .then(response => response.json())
-        .then(data => {
-            const dropdown = document.getElementById('csvSelect');
-            dropdown.innerHTML = '';  // Clear the loading message
-
-            data.forEach(file => {
-                if (file.name.endsWith('.csv')) {  // Only include CSV files
-                    const option = document.createElement('option');
-                    option.value = file.download_url;
-                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
-                    dropdown.appendChild(option);
-                }
-            });
-
-            // Automatically render the first dataset
-            if (dropdown.options.length > 0) {
-                renderChart(dropdown.value);  // Render the first chart on page load
-            }
-        })
-        .catch(error => console.error('Error fetching CSV files:', error));
-}
-
-// Event listener for dropdown menu change
-document.getElementById('csvSelect').addEventListener('change', function () {
-    const selectedCSV = this.value;
-    renderChart(selectedCSV);  // Render the chart with the selected CSV
-});
-
-// Populate the dropdown when the page loads
+// Example Highcharts chart
 document.addEventListener('DOMContentLoaded', function () {
-    populateDropdown();
+    var chart = Highcharts.chart('container', {
+        chart: {
+            type: 'spline',
+            style: {
+                fontFamily: 'Averta',
+            }
+        },
+        title: {
+            text: 'Sample Chart',
+            style: {
+                color: '#000000',
+                fontSize: '20px',
+                fontWeight: 'bold'
+            }
+        },
+        series: [{
+            name: 'Sample Data',
+            data: [1, 3, 2, 4],
+            color: '#64d28c'
+        }],
+        legend: {
+            itemStyle: {
+                fontSize: '14px',
+                fontFamily: 'Averta'
+            }
+        }
+    });
+
+    // Function to export the full chart as JSON
+    function exportChartAsJson() {
+        const chartConfig = chart.options;  // Get the full chart config
+        const chartConfigJson = JSON.stringify(chartConfig, null, 2);  // Convert to JSON string
+
+        // Create a downloadable link
+        const blob = new Blob([chartConfigJson], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "chart-config.json";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Add event listener to the export button
+    document.getElementById('exportJsonButton').addEventListener('click', exportChartAsJson);
 });
 </script>
 
