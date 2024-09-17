@@ -11,13 +11,13 @@ html, body {
 }
 
 .heading-container {
-    text-align: center;
+    text-align: left;
     margin-top: 20px;
     padding: 20px;
 }
 
 .heading-illustration {
-    max-width: 200px; 
+    max-width: 1200px; 
     margin-bottom: 20px;
 }
 
