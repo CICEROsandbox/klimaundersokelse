@@ -7,7 +7,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 20px;  /* Add some padding to prevent elements from touching screen edges */
-    background-color: #ffffff;  /* Light background for contrast */
+    background-color: #ffffff;
 }
 
 /* Style the dropdown menu */
