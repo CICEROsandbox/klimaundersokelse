@@ -34,11 +34,15 @@ html, body {
     box-sizing: border-box;
 }
 
+/* Adjusted container for dropdown to center properly */
 .dropdown-container {
     width: 100%;
     max-width: 600px;
-    margin: 20px auto;
+    margin: 20px auto; /* This ensures it is centered horizontally */
     text-align: center;
+    display: flex;
+    justify-content: center; /* Ensures centering within the container */
+    align-items: center;
 }
 
 select {
