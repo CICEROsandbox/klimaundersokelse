@@ -8,6 +8,8 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     font-family: 'Averta', sans-serif;
+    width: 100%; /* Ensure the body doesn't exceed the viewport width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .heading-container {
@@ -16,6 +18,7 @@ html, body {
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    box-sizing: border-box; /* Include padding and border in element's width */
 }
 
 .heading-illustration {
@@ -38,16 +41,16 @@ html, body {
 .dropdown-container {
     width: 100%;
     max-width: 600px;
-    margin: 20px auto; /* This ensures it is centered horizontally */
+    margin: 20px auto; /* Ensure it is centered horizontally */
     text-align: center;
     display: flex;
-    justify-content: center; /* Ensures centering within the container */
+    justify-content: center; /* Ensure centering within the container */
     align-items: center;
 }
 
 select {
-    width: 100%;  /* Full width */
-    max-width: 100%;  /* Prevent overflow */
+    width: 100%;
+    max-width: 100%;
     padding: 12px;
     font-size: 16px;
     border-radius: 10px;
@@ -56,9 +59,9 @@ select {
     color: #333;
     outline: none;
     cursor: pointer;
-    text-overflow: ellipsis;  /* Truncate text with ellipsis */
-    white-space: nowrap;  /* Prevent long text from wrapping */
-    overflow: hidden;  /* Hide overflowing text */
+    text-overflow: ellipsis; /* Truncate text with ellipsis */
+    white-space: nowrap; /* Prevent long text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
     transition: box-shadow 0.3s ease;
 }
 
