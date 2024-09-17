@@ -11,7 +11,7 @@ html, body {
 }
 
 .heading-container {
-    width: 100%; /* Full width for SVG */
+    width: 100%; 
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -19,20 +19,20 @@ html, body {
 }
 
 .heading-illustration {
-    width: 100%; /* Make SVG fill the container width */
-    max-width: 100%; /* Ensure it doesn’t exceed the container */
+    width: 100%; 
+    max-width: 100%; 
     height: auto;
 }
 
 .heading-content p {
     font-size: 16px;
     color: #333333;
-    text-align: left;  /* Left align the paragraph */
+    text-align: left; 
     margin-top: 20px;
-    width: 100%;  /* Ensure the paragraph takes up full width */
-    padding: 0 10px; /* Add some padding for better readability */
-    max-width: 100%;  /* Ensure no restriction on width */
-    box-sizing: border-box; /* Include padding within the width */
+    width: 100%;  
+    padding: 0 10px; 
+    max-width: 100%; 
+    box-sizing: border-box; 
 }
 
 .dropdown-container {
