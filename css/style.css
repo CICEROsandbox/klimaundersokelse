@@ -94,6 +94,11 @@ select:focus {
     box-sizing: border-box;
 }
 
+.share-buttons {
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
 
 @media (max-width: 1024px) {
     .chart-container {
