@@ -39,10 +39,10 @@
     <div id="ageChartContainer" class="chart"></div>
 </div>
 
-<!-- Share buttons -->
+<!-- Share buttons with SVG icons -->
 <div class="share-buttons" style="text-align: center; margin-top: 20px;">
-    <button id="shareTwitter">Share on Twitter</button>
-    <button id="shareLink">Copy Link</button>
+    <img src="grafikk/xlogo.svg" alt="Share on X" id="shareX" class="share-icon">
+    <img src="grafikk/fblogo.svg" alt="Share on Facebook" id="shareFacebook" class="share-icon">
 </div>
 
 <script>
@@ -128,16 +128,15 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 });
 
 // Share buttons functionality
-document.getElementById('shareTwitter').addEventListener('click', function () {
+document.getElementById('shareX').addEventListener('click', function () {
     const shareURL = encodeURIComponent(window.location.href);
     const shareText = encodeURIComponent('Check out this survey result: ');
     window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`, '_blank');
 });
 
-document.getElementById('shareLink').addEventListener('click', function () {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('Link copied to clipboard!');
-    });
+document.getElementById('shareFacebook').addEventListener('click', function () {
+    const shareURL = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareURL}`, '_blank');
 });
 
 // Populate the dropdown when the page loads
@@ -145,6 +144,21 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 </script>
+
+<style>
+/* Style for the share icons */
+.share-icon {
+    width: 40px; /* Adjust the size of the icons */
+    height: auto;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.share-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+</style>
 
 </body>
 </html>
