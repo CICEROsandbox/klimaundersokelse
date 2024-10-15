@@ -10,6 +10,30 @@
 
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Move the CSS into this <style> block -->
+    <style>
+    /* Style for the share icons */
+    .share-icon {
+        width: 40px; /* Adjust the size of the icons */
+        height: auto;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .share-icon:hover {
+        transform: scale(1.1); /* Slight zoom effect on hover */
+    }
+
+    /* Style for the paragraph container */
+    .paragraph-container {
+        margin: 20px 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: justify;
+    }
+    </style>
 </head>
 <body>
 
@@ -165,27 +189,6 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
 </script>
-/* Style for the share icons */
-.share-icon {
-    width: 40px; /* Adjust the size of the icons */
-    height: auto;
-    margin: 0 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.share-icon:hover {
-    transform: scale(1.1); /* Slight zoom effect on hover */
-}
-
-/* Style for the paragraph container */
-.paragraph-container {
-    margin: 20px 0;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: justify;
-}
-</style>
 
 </body>
 </html>
