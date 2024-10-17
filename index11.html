@@ -100,7 +100,7 @@ function renderCharts(question) {
 
     // Render age distribution chart with data from /data/alder/ using columns.json
 // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
-renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json');
+renderChart(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-age.json');
 
 // Fetch and display the corresponding text for the sentralitet chart
 displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
