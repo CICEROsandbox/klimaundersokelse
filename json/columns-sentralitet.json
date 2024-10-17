@@ -10,7 +10,7 @@
         },
         "align": "left"
     },
-    "subtitle": 1= mest sentral 6=minst sentral {
+    "subtitle": {
         "text": "",
         "style": {
             "fontFamily": "Averta",
