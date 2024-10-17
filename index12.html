@@ -72,8 +72,9 @@
 </div>
 
 <script>
-// Function to load and render a chart in a specific container, including fetching the N-number
-function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName) {
+
+    // Function to load and render a chart in a specific container, including fetching the N-number
+function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName, folder) {
     fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
         .then(response => response.json())
         .then(styleConfig => {
@@ -84,8 +85,8 @@ function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFile
                 dataRefreshRate: 60
             };
             
-            // Fetch the N-number from the corresponding text file
-            fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/text/numbers/${baseFileName}.txt`)
+            // Fetch the N-number from the corresponding text file in the correct folder
+            fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
                 .then(response => response.text())
                 .then(nText => {
                     // Update the credits with the fetched N-number
@@ -124,25 +125,24 @@ function renderCharts(question) {
     window.history.pushState({}, '', url);
 
     // Render line chart with data from /data/ using linechart.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json');
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
     
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json');
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
 
     // Render age distribution chart with data from /data/alder/ using columns.json
-// Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
-renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json');
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', baseFileName, 'alder');
 
-// Fetch and display the corresponding text for the sentralitet chart
-displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
-
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json');
+    // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
 
     // Fetch and display the corresponding text for each chart
     displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
     displayParagraph(baseFileName, 'kjonn', 'genderChartContainer');
     displayParagraph(baseFileName, 'alder', 'ageChartContainer');
+    displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
 }
+
 
 // Function to load and render a chart in a specific container
 function renderChart(csvURL, chartType, container, jsonFile) {
