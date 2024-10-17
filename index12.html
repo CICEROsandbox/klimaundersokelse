@@ -125,7 +125,7 @@ function renderCharts(question) {
     window.history.pushState({}, '', url);
 
     // Render line chart with data from /data/ using linechart.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/utvikling/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
     
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
