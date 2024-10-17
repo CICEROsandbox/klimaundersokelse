@@ -90,7 +90,7 @@ function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFile
                 .then(response => response.text())
                 .then(nText => {
                     // Update the credits with the fetched N-number
-                    styleConfig.credits.text = `N=${nText.trim()}, CICEROs klimaundersøkelse`;
+                    styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
                     
                     // Render the chart with the updated credits
                     Highcharts.chart(container, styleConfig);
