@@ -1,0 +1,143 @@
+{
+    "title": {
+        "text": "Sentralitet (2023)",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "subtitle": {
+        "text": "1 = mest sentral, 6 = minst sentral",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#3250c8",
+            "fontSize": "17px",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "exporting": {},
+    "chart": {
+        "polar": false
+    },
+    "xAxis": {
+        "index": 0,
+        "isX": true,
+        "type": "category",
+        "labels": {
+            "style": {
+                "fontSize": "14px"
+            }
+        },
+        "title": {
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "20px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        }
+    },
+    "yAxis": {
+        "index": 0,
+        "allowDecimals": false,
+        "ceiling": 60,
+        "max": 60,
+        "minRange": 60,
+        "title": {
+            "text": "Prosent",
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "14px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        },
+        "labels": {
+            "style": {
+                "fontSize": "15px"
+            }
+        }
+    },
+    "series": [
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid",
+            "color": "#5573e6",
+            "name": "Stemmer svært dårlig"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#fa6e3c",
+            "name": "Stemmer ganske dårlig"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#fad250",
+            "name": "Stemmer verken dårlig eller godt"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#00785f",
+            "name": "Stemmer ganske godt"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "name": "Vet ikke"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "name": "Vet ikke"
+        }
+    ],
+    "data": {
+        "csv": "Svar,Mann,Kvinne\nStemmer svært dårlig,10 ,4 \nStemmer ganske dårlig,8 ,3 \nStemmer verken dårlig eller godt,28 ,26 \nStemmer ganske godt,37 ,41 \nStemmer svært godt,15 ,23 \nVet ikke,2 ,3 ",
+        "googleSpreadsheetKey": false,
+        "googleSpreadsheetWorksheet": false
+    },
+    "pane": {
+        "background": []
+    },
+    "responsive": {
+        "rules": []
+    },
+    "credits": {
+        "href": "",
+        "text": "N=4125, CICEROs klimaundersøkelse"
+    },
+    "legend": {
+        "itemStyle": {
+            "fontFamily": "Averta",
+            "color": "#333333",
+            "fontSize": "14px",
+            "fontWeight": "bold",
+            "fontStyle": "normal",
+            "cursor": "pointer"
+        }
+    }
+}
