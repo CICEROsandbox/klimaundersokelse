@@ -72,7 +72,38 @@
 </div>
 
 <script>
-// Function to load and render all three charts based on the selected question
+// Function to load and render a chart in a specific container, including fetching the N-number
+function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            styleConfig.chart.type = chartType;
+            styleConfig.data = {
+                csvURL: csvURL,
+                enablePolling: true,
+                dataRefreshRate: 60
+            };
+            
+            // Fetch the N-number from the corresponding text file
+            fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/text/numbers/${baseFileName}.txt`)
+                .then(response => response.text())
+                .then(nText => {
+                    // Update the credits with the fetched N-number
+                    styleConfig.credits.text = `N=${nText.trim()}, CICEROs klimaundersøkelse`;
+                    
+                    // Render the chart with the updated credits
+                    Highcharts.chart(container, styleConfig);
+                })
+                .catch(error => {
+                    console.error(`Error fetching N-number for ${baseFileName}:`, error);
+                    Highcharts.chart(container, styleConfig);  // Render without updating credits if there's an error
+                });
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+    
+    // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
 
