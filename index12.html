@@ -103,6 +103,13 @@ function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFile
         .catch(error => console.error(`Error loading ${jsonFile}:`, error));
 }
 
+    // Title mapping for filenames to titles with question marks
+const titleMap = {
+    "Norge bor øke gassproduksjonen": "Norge bør øke gassproduksjonen?",
+    "Er vindkraft et godt alternativ": "Er vindkraft et godt alternativ?",
+    "Klimatiltak i Norge": "Er klimatiltak i Norge tilstrekkelig?",
+    // Add more mappings here
+};
     
     // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
@@ -117,7 +124,13 @@ function renderCharts(question) {
     // Update the H1 header with the selected question
     const header = document.getElementById('selectedQuestionHeader');
     header.style.display = 'block';
-    header.textContent = baseFileName;
+    // Check if the file has a corresponding title with a question mark
+if (titleMap[baseFileName]) {
+    header.textContent = titleMap[baseFileName];
+} else {
+    header.textContent = baseFileName; // Fallback to the file name if no mapping is found
+}
+
 
     // Update the URL with the selected question
     const url = new URL(window.location);
