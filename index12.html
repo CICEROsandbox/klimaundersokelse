@@ -243,6 +243,16 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 });
+    document.getElementById('shareX').addEventListener('click', function() {
+    const url = window.location.href;  // Get current page URL
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, '_blank');
+});
+
+document.getElementById('shareFacebook').addEventListener('click', function() {
+    const url = window.location.href;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+});
+
 </script>
 
 </body>
