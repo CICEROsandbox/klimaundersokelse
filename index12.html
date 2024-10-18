@@ -62,6 +62,8 @@
     <div id="genderChartContainer" class="chart"></div>
     <div id="ageChartContainer" class="chart"></div>
 <div id="sentralitetChartContainer" class="chart"></div>
+    <div id="partierChartContainer" class="chart"></div>
+
 
 </div>
 
@@ -152,11 +154,17 @@ if (titleMap[baseFileName]) {
     // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
 
+    // Render partier distribution chart with data from /data/partier/ using columns.json
+renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/${question}`, 'column', 'partierChartContainer', 'columns-partier.json', baseFileName, 'partier');
+
+
     // Fetch and display the corresponding text for each chart
     displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
     displayParagraph(baseFileName, 'kjonn', 'genderChartContainer');
     displayParagraph(baseFileName, 'alder', 'ageChartContainer');
     displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
+    displayParagraph(baseFileName, 'partier', 'partierChartContainer');
+
 }
 
 
