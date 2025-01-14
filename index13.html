@@ -1,1 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Results</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Move the CSS into this <style> block -->
+    <style>
+    /* Style for the share icons */
+    .share-icon {
+        width: 40px; /* Adjust the size of the icons */
+        height: auto;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .share-icon:hover {
+        transform: scale(1.1); /* Slight zoom effect on hover */
+    }
+
+    /* Style for the paragraph container */
+    .paragraph-container {
+        margin: 20px 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: justify;
+    }
+    </style>
+</head>
+<body>
+
+<!-- SVG and Heading Section -->
+<div class="heading-container">
+    <img src="grafikk/familiebilde2.svg" alt="CICERO Family Illustration" class="heading-illustration">
+    <div class="heading-content">
+        <p>CICERO Senter for klimaforskning har siden 2018 undersøkt hvilke oppfatninger den norske befolkningen har om klimapolitikk, klimaendringer og klimatiltak. På disse sidene finner du resultater fra 2023. Utforsk resultatene i menyen under.</p>
+    </div>
+</div>
+
+<!-- Dropdown menu to select the question -->
+<label for="questionSelect">Velg påstand:</label>
+<div class="dropdown-container">
+    <select id="questionSelect">
+        <option value="" disabled selected>Velg spørsmål her</option>
+    </select>
+</div>
+
+<!-- H1 Header to display the selected question -->
+<h1 id="selectedQuestionHeader" style="display: none; text-align: center; margin-top: 20px;"></h1>
+
+<!-- Container to hold all three charts, initially hidden -->
+<div class="chart-container" style="display: none;">
+    <div id="lineChartContainer" class="chart"></div>
+    <div id="genderChartContainer" class="chart"></div>
+    <div id="ageChartContainer" class="chart"></div>
+<div id="sentralitetChartContainer" class="chart"></div>
+    <div id="partierChartContainer" class="chart"></div>
+
+
+</div>
+
+<!-- Share buttons with SVG icons -->
+<div class="share-buttons" style="text-align: center; margin-top: 20px;">
+    <img src="grafikk/xlogo.svg" alt="Share on X" id="shareX" class="share-icon">
+    <img src="grafikk/fblogo.svg" alt="Share on Facebook" id="shareFacebook" class="share-icon">
+</div>
+
+<script>
+
+    // Function to load and render a chart in a specific container, including fetching the N-number
+function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName, folder) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            styleConfig.chart.type = chartType;
+            styleConfig.data = {
+                csvURL: csvURL,
+                enablePolling: true,
+                dataRefreshRate: 60
+            };
+            
+            // Fetch the N-number from the corresponding text file in the correct folder
+            fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
+                .then(response => response.text())
+                .then(nText => {
+                    // Update the credits with the fetched N-number
+                    styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
+                    
+                    // Render the chart with the updated credits
+                    Highcharts.chart(container, styleConfig);
+                })
+                .catch(error => {
+                    console.error(`Error fetching N-number for ${baseFileName}:`, error);
+                    Highcharts.chart(container, styleConfig);  // Render without updating credits if there's an error
+                });
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+    // Title mapping for filenames to titles with question marks
+const titleMap = {
+    "I hvilken grad bekymrer du deg for klimaendringer": "I hvilken grad bekymrer du deg for klimaendringer?",
+    "Dersom en person i omgangskretsen din oppfører seg lite klimavennlig i hvilken grad vil det bli kommentert": "Dersom en person i omgangskretsen din oppfører seg lite klimavennlig i hvilken grad vil det bli kommentert?",
+    "I hvilken grad bekymrer du deg for tap av natur": "I hvilken grad bekymrer du deg for tap av natur?",
+    "I hvilken grad bekymrer du deg for klimaendringer": "I hvilken grad bekymrer du deg for klimaendringer?",
+    
+    
+    // Add more mappings here
+};
+    
+    // Function to load and render all three charts based on the selected question
+function renderCharts(question) {
+    const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+
+    // Clear previous text and charts before rendering new ones
+    clearPreviousContent();
+
+    // Show chart container
+    document.querySelector('.chart-container').style.display = 'block';
+
+    // Update the H1 header with the selected question
+    const header = document.getElementById('selectedQuestionHeader');
+    header.style.display = 'block';
+    // Check if the file has a corresponding title with a question mark
+if (titleMap[baseFileName]) {
+    header.textContent = titleMap[baseFileName];
+} else {
+    header.textContent = baseFileName; // Fallback to the file name if no mapping is found
+}
+
+
+    // Update the URL with the selected question
+    const url = new URL(window.location);
+    url.searchParams.set('question', question);
+    window.history.pushState({}, '', url);
+
+    // Render line chart with data from /data/ using linechart.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/utvikling/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
+    
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
+
+    // Render age distribution chart with data from /data/alder/ using columns.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/${question}`, 'column', 'ageChartContainer', 'columns-age.json', baseFileName, 'alder');
+
+    // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
+
+    // Render partier distribution chart with data from /data/partier/ using columns.json
+renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/${question}`, 'column', 'partierChartContainer', 'columns-partier.json', baseFileName, 'partier');
+
+
+    // Fetch and display the corresponding text for each chart
+    displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
+    displayParagraph(baseFileName, 'kjonn', 'genderChartContainer');
+    displayParagraph(baseFileName, 'alder', 'ageChartContainer');
+    displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
+    displayParagraph(baseFileName, 'partier', 'partierChartContainer');
+
+}
+
+
+// Function to load and render a chart in a specific container
+function renderChart(csvURL, chartType, container, jsonFile) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+        .then(response => response.json())
+        .then(styleConfig => {
+            styleConfig.chart.type = chartType;
+            styleConfig.data = {
+                csvURL: csvURL,
+                enablePolling: true,
+                dataRefreshRate: 60
+            };
+            Highcharts.chart(container, styleConfig);
+        })
+        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+}
+
+// Function to fetch and display the paragraph under each chart container
+function displayParagraph(fileName, folder, container) {
+    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/text/${folder}/${fileName}.txt`)
+        .then(response => response.text())
+        .then(text => {
+            const containerElement = document.getElementById(container);
+            const paragraphContainer = document.createElement('div');
+            paragraphContainer.classList.add('paragraph-container');
+            paragraphContainer.innerHTML = `<p>${text}</p>`;
+            containerElement.insertAdjacentElement('afterend', paragraphContainer);  // Insert the text after the chart container
+        })
+        .catch(error => {
+            const containerElement = document.getElementById(container);
+            const errorParagraph = document.createElement('p');
+            errorParagraph.innerHTML = `404: Text not found for ${folder}/${fileName}.txt`;
+            containerElement.insertAdjacentElement('afterend', errorParagraph);  // Insert the error message after the chart container
+        });
+}
+
+// Function to clear previously rendered text and charts
+function clearPreviousContent() {
+    const paragraphContainers = document.querySelectorAll('.paragraph-container');
+    paragraphContainers.forEach(container => container.remove());  // Remove all previous text containers
+}
+
+// Function to populate the dropdown with available questions
+function populateDropdown() {
+    const apiURL = 'https://api.github.com/repos/CICEROsandbox/klimaundersokelse/contents/data';
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('questionSelect');
+            dropdown.innerHTML = '';  // Clear the loading message
+
+            data.forEach(file => {
+                if (file.name.endsWith('.csv')) {  // Only include CSV files
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
+                    dropdown.appendChild(option);
+                }
+            });
+
+            // Check if URL has a question parameter and auto-select it
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedQuestion = urlParams.get('question');
+            if (selectedQuestion) {
+                dropdown.value = selectedQuestion;
+                renderCharts(selectedQuestion);
+            }
+        })
+        .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Event listener for dropdown menu change
+document.getElementById('questionSelect').addEventListener('change', function () {
+    const selectedQuestion = this.value;
+    if (selectedQuestion) {
+        renderCharts(selectedQuestion);  // Render the charts with the selected question
+    }
+});
+
+// Populate the dropdown when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    populateDropdown();
+});
+    document.getElementById('shareX').addEventListener('click', function() {
+    const url = window.location.href;  // Get current page URL
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, '_blank');
+});
+
+document.getElementById('shareFacebook').addEventListener('click', function() {
+    const url = window.location.href;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+});
+
+</script>
+
+</body>
+</html>
 
