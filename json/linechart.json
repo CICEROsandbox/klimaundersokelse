@@ -24,7 +24,7 @@
     },
     "yAxis": {
         "allowDecimals": false,
-        "max": 80,
+        "max": null,
         "title": {
             "text": "Prosent",
             "style": {
