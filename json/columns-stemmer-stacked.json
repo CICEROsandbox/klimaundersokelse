@@ -68,7 +68,6 @@
     "plotOptions": {
         "column": {
             "stacking": "normal",
-            "grouping": false,
             "dataLabels": {
                 "enabled": true,
                 "format": "{y}%",
@@ -81,38 +80,60 @@
     },
     "series": [
         {
-            "name": "Stemmer svært dårlig",
-            "stack": "negative",
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid",
             "color": "#5573e6",
-            "type": "column"
+            "name": "Stemmer svært dårlig",
+            "stack": "negative"
         },
         {
-            "name": "Stemmer ganske dårlig",
-            "stack": "negative",
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
             "color": "#fa6e3c",
-            "type": "column"
+            "name": "Stemmer ganske dårlig",
+            "stack": "negative"
         },
         {
-            "name": "Stemmer verken dårlig eller godt",
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
             "color": "#fad250",
-            "type": "column"
+            "name": "Stemmer verken dårlig eller godt"
         },
         {
-            "name": "Stemmer ganske godt",
-            "stack": "positive",
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
             "color": "#00785f",
-            "type": "column"
+            "name": "Stemmer ganske godt",
+            "stack": "positive"
         },
         {
-            "name": "Stemmer svært godt",
-            "stack": "positive",
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
             "color": "#008f6f",
-            "type": "column"
+            "name": "Stemmer svært godt",
+            "stack": "positive"
         },
         {
-            "name": "Vet ikke",
+            "turboThreshold": 0,
+            "type": "column",
             "color": "#808080",
-            "type": "column"
+            "name": "Vet ikke"
         }
     ],
     "data": {
