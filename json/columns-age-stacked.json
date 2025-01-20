@@ -68,12 +68,35 @@
     "plotOptions": {
         "column": {
             "stacking": "normal",
+            "grouping": false,
             "dataLabels": {
                 "enabled": true,
                 "format": "{y}%",
                 "style": {
                     "fontSize": "12px",
                     "fontFamily": "Averta"
+                }
+            }
+        },
+        "series": {
+            "events": {
+                "afterLoad": function() {
+                    const series = this.chart.series;
+                    const hasStemmmer = series.some(s => s.name.includes('Stemmer'));
+                    
+                    if (hasStemmmer) {
+                        series.forEach(s => {
+                            if (s.name.includes('svært dårlig') || s.name.includes('ganske dårlig')) {
+                                s.update({stack: 'negative'});
+                            } else if (s.name.includes('svært godt') || s.name.includes('ganske godt')) {
+                                s.update({stack: 'positive'});
+                            }
+                        });
+                    } else {
+                        series.forEach(s => {
+                            s.update({stack: undefined, grouping: true});
+                        });
+                    }
                 }
             }
         }
@@ -85,42 +108,16 @@
             "marker": {
                 "symbol": "circle"
             },
-            "dashStyle": "Solid",
-            "color": "#5573e6",
-            "name": "Stemmer svært/ganske dårlig",
-            "stack": "negative"
-        },
-        {
-            "turboThreshold": 0,
-            "type": "column",
-            "marker": {
-                "symbol": "circle"
-            },
-            "color": "#fad250",
-            "name": "Stemmer verken dårlig eller godt"
-        },
-        {
-            "turboThreshold": 0,
-            "type": "column",
-            "marker": {
-                "symbol": "circle"
-            },
-            "color": "#00785f",
-            "name": "Stemmer svært/ganske godt",
-            "stack": "positive"
-        },
-        {
-            "turboThreshold": 0,
-            "type": "column",
-            "marker": {
-                "symbol": "circle"
-            },
-            "color": "#808080",
-            "name": "Vet ikke"
+            "dashStyle": "Solid"
         }
     ],
     "data": {
-        "csvURL": "",
+        "seriesMapping": [
+            {
+                "x": 0,
+                "y": 1
+            }
+        ],
         "enablePolling": true,
         "dataRefreshRate": 60
     },
@@ -130,6 +127,7 @@
     "responsive": {
         "rules": []
     },
+    "colors": ["#5573e6", "#fa6e3c", "#fad250", "#00785f", "#808080"],
     "credits": {
         "href": "",
         "text": "N=4125, CICEROs klimaundersøkelse"
