@@ -74,33 +74,45 @@
 <script>
 
     // Function to load and render a chart in a specific container, including fetching the N-number
-function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName, folder) {
-    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
-        .then(response => response.json())
-        .then(styleConfig => {
-            styleConfig.chart.type = chartType;
-            styleConfig.data = {
-                csvURL: csvURL,
-                enablePolling: true,
-                dataRefreshRate: 60
-            };
-            
-            // Fetch the N-number from the corresponding text file in the correct folder
-            fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
-                .then(response => response.text())
-                .then(nText => {
-                    // Update the credits with the fetched N-number
-                    styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
-                    
-                    // Render the chart with the updated credits
-                    Highcharts.chart(container, styleConfig);
-                })
-                .catch(error => {
-                    console.error(`Error fetching N-number for ${baseFileName}:`, error);
-                    Highcharts.chart(container, styleConfig);  // Render without updating credits if there's an error
-                });
-        })
-        .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+async function renderChartWithCredits(csvURL, chartType, container, jsonFile, baseFileName, folder) {
+    // First check if the CSV exists
+    try {
+        const csvResponse = await fetch(csvURL);
+        if (!csvResponse.ok) {
+            // If CSV doesn't exist, hide the container and return
+            document.getElementById(container).style.display = 'none';
+            return;
+        }
+        // If CSV exists, show the container
+        document.getElementById(container).style.display = 'block';
+
+        // Rest of your existing function remains exactly the same
+        fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/json/${jsonFile}`)
+            .then(response => response.json())
+            .then(styleConfig => {
+                styleConfig.chart.type = chartType;
+                styleConfig.data = {
+                    csvURL: csvURL,
+                    enablePolling: true,
+                    dataRefreshRate: 60
+                };
+                
+                fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
+                    .then(response => response.text())
+                    .then(nText => {
+                        styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
+                        Highcharts.chart(container, styleConfig);
+                    })
+                    .catch(error => {
+                        console.error(`Error fetching N-number for ${baseFileName}:`, error);
+                        Highcharts.chart(container, styleConfig);
+                    });
+            })
+            .catch(error => console.error(`Error loading ${jsonFile}:`, error));
+    } catch (error) {
+        console.error(`Error checking CSV existence: ${csvURL}`, error);
+        document.getElementById(container).style.display = 'none';
+    }
 }
 
     // Title mapping for filenames to titles with question marks
