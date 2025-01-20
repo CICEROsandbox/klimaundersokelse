@@ -167,8 +167,10 @@ if (titleMap[baseFileName]) {
     // Render gender distribution chart with data from /data/kjonn/ using columns.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/2024/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
 
-    // Render age distribution chart with data from /data/alder/ using columns.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', 'columns-age.json', baseFileName, 'alder');
+    // Render age distribution chart with data from /data/alder/ using appropriate json based on question type
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', 
+        baseFileName.includes('Stemmer') ? 'columns-age-stacked.json' : 'columns-age.json', 
+        baseFileName, 'alder');
 
     // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/2025/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
