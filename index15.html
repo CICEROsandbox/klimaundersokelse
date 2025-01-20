@@ -135,9 +135,32 @@ const titleMap = {
     // Add more mappings here
 };
     
-    // Function to load and render all three charts based on the selected question
+// Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
+
+    // Determine which JSON configuration to use based on question type
+    const getConfigFile = (questionText) => {
+        if (questionText.startsWith('Vil du')) {
+            return 'vil-du-columns.json';
+        } else if (questionText.includes('bekymrer')) {
+            return 'bekymring-columns.json';
+        } else if (questionText.includes('Om lag hvor ofte')) {
+            return 'frequency-columns.json';
+        } else if (questionText.includes('Det legges') || 
+                   questionText.includes('Folk jeg kjenner') ||
+                   questionText.includes('Jeg har') ||
+                   questionText.includes('Norge bør') ||
+                   questionText.includes('Ny teknologi') ||
+                   questionText.includes('Strømforbruk') ||
+                   questionText.includes('Livsstilen') ||
+                   questionText.includes('Klimaendringene') ||
+                   questionText.includes('Menneskelig aktivitet')) {
+            return 'columns-stemmer-stacked.json';
+        } else {
+            return 'columns.json';  // default configuration
+        }
+    };
 
     // Clear previous text and charts before rendering new ones
     clearPreviousContent();
@@ -148,34 +171,34 @@ function renderCharts(question) {
     // Update the H1 header with the selected question
     const header = document.getElementById('selectedQuestionHeader');
     header.style.display = 'block';
-    // Check if the file has a corresponding title with a question mark
-if (titleMap[baseFileName]) {
-    header.textContent = titleMap[baseFileName];
-} else {
-    header.textContent = baseFileName; // Fallback to the file name if no mapping is found
-}
-
+    if (titleMap[baseFileName]) {
+        header.textContent = titleMap[baseFileName];
+    } else {
+        header.textContent = baseFileName;
+    }
 
     // Update the URL with the selected question
     const url = new URL(window.location);
     url.searchParams.set('question', question);
     window.history.pushState({}, '', url);
 
+    // Get the appropriate JSON config file for this question type
+    const configFile = getConfigFile(baseFileName);
+
     // Render line chart with data from /data/ using linechart.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/utvikling/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
     
-    // Render gender distribution chart with data from /data/kjonn/ using columns.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/2024/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
+    // Render gender distribution chart with data from /data/kjonn/ using appropriate config
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/2024/${question}`, 'column', 'genderChartContainer', configFile, baseFileName, 'kjonn');
 
-    // Render age distribution chart with data from /data/alder/ using appropriate json based on question type
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', 'columns-age.json', baseFileName, 'alder');
+    // Render age distribution chart with appropriate config
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', configFile, baseFileName, 'alder');
 
-    // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/2025/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
+    // Render sentralitet distribution chart with appropriate config
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/2025/${question}`, 'column', 'sentralitetChartContainer', configFile, baseFileName, 'sentralitet');
 
-    // Render partier distribution chart with data from /data/partier/ using columns.json
-renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/2025/${question}`, 'column', 'partierChartContainer', 'columns-partier.json', baseFileName, 'partier');
-
+    // Render partier distribution chart with appropriate config
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/2025/${question}`, 'column', 'partierChartContainer', configFile, baseFileName, 'partier');
 
     // Fetch and display the corresponding text for each chart
     displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
@@ -183,7 +206,6 @@ renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaund
     displayParagraph(baseFileName, 'alder', 'ageChartContainer');
     displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
     displayParagraph(baseFileName, 'partier', 'partierChartContainer');
-
 }
 
 
