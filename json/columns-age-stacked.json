@@ -48,7 +48,7 @@
     "yAxis": {
         "index": 0,
         "allowDecimals": false,
-        "max": null,
+        "max": 100,
         "title": {
             "text": "Prosent",
             "style": {
@@ -77,38 +77,42 @@
                     "fontFamily": "Averta"
                 }
             }
-        },
-        "series": {
-            "events": {
-                "afterLoad": function() {
-                    const series = this.chart.series;
-                    const hasStemmmer = series.some(s => s.name.includes('Stemmer'));
-                    
-                    if (hasStemmmer) {
-                        series.forEach(s => {
-                            if (s.name.includes('svært dårlig') || s.name.includes('ganske dårlig')) {
-                                s.update({stack: 'negative'});
-                            } else if (s.name.includes('svært godt') || s.name.includes('ganske godt')) {
-                                s.update({stack: 'positive'});
-                            }
-                        });
-                    } else {
-                        series.forEach(s => {
-                            s.update({stack: undefined, grouping: true});
-                        });
-                    }
-                }
-            }
         }
     },
     "series": [
         {
-            "turboThreshold": 0,
-            "type": "column",
-            "marker": {
-                "symbol": "circle"
-            },
-            "dashStyle": "Solid"
+            "name": "Stemmer svært dårlig",
+            "stack": "negative",
+            "color": "#5573e6",
+            "type": "column"
+        },
+        {
+            "name": "Stemmer ganske dårlig",
+            "stack": "negative",
+            "color": "#fa6e3c",
+            "type": "column"
+        },
+        {
+            "name": "Stemmer verken dårlig eller godt",
+            "color": "#fad250",
+            "type": "column"
+        },
+        {
+            "name": "Stemmer ganske godt",
+            "stack": "positive",
+            "color": "#00785f",
+            "type": "column"
+        },
+        {
+            "name": "Stemmer svært godt",
+            "stack": "positive",
+            "color": "#008f6f",
+            "type": "column"
+        },
+        {
+            "name": "Vet ikke",
+            "color": "#808080",
+            "type": "column"
         }
     ],
     "data": {
@@ -127,7 +131,6 @@
     "responsive": {
         "rules": []
     },
-    "colors": ["#5573e6", "#fa6e3c", "#fad250", "#00785f", "#808080"],
     "credits": {
         "href": "",
         "text": "N=4125, CICEROs klimaundersøkelse"
