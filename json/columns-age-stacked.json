@@ -1,0 +1,147 @@
+{
+    "title": {
+        "text": "Alder (2024)",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#000000",
+            "fontSize": "20px",
+            "fontWeight": "bold",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "subtitle": {
+        "text": "",
+        "style": {
+            "fontFamily": "Averta",
+            "color": "#3250c8",
+            "fontSize": "17px",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+        },
+        "align": "left"
+    },
+    "exporting": {},
+    "chart": {
+        "polar": false,
+        "type": "column"
+    },
+    "xAxis": {
+        "index": 0,
+        "isX": true,
+        "type": "category",
+        "labels": {
+            "style": {
+                "fontSize": "14px"
+            }
+        },
+        "title": {
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "20px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        }
+    },
+    "yAxis": {
+        "index": 0,
+        "allowDecimals": false,
+        "max": null,
+        "title": {
+            "text": "Prosent",
+            "style": {
+                "fontFamily": "Default",
+                "color": "#666666",
+                "fontSize": "14px",
+                "fontWeight": "normal",
+                "fontStyle": "normal"
+            }
+        },
+        "labels": {
+            "style": {
+                "fontSize": "15px"
+            }
+        }
+    },
+    "plotOptions": {
+        "column": {
+            "stacking": "normal",
+            "dataLabels": {
+                "enabled": true,
+                "format": "{y}%",
+                "style": {
+                    "fontSize": "12px",
+                    "fontFamily": "Averta"
+                }
+            }
+        }
+    },
+    "series": [
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "dashStyle": "Solid",
+            "color": "#5573e6",
+            "name": "Stemmer svært/ganske dårlig",
+            "stack": "negative"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#fad250",
+            "name": "Stemmer verken dårlig eller godt"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#00785f",
+            "name": "Stemmer svært/ganske godt",
+            "stack": "positive"
+        },
+        {
+            "turboThreshold": 0,
+            "type": "column",
+            "marker": {
+                "symbol": "circle"
+            },
+            "color": "#808080",
+            "name": "Vet ikke"
+        }
+    ],
+    "data": {
+        "csvURL": "",
+        "enablePolling": true,
+        "dataRefreshRate": 60
+    },
+    "pane": {
+        "background": []
+    },
+    "responsive": {
+        "rules": []
+    },
+    "credits": {
+        "href": "",
+        "text": "N=4125, CICEROs klimaundersøkelse"
+    },
+    "legend": {
+        "itemStyle": {
+            "fontFamily": "Averta",
+            "color": "#333333",
+            "fontSize": "14px",
+            "fontWeight": "bold",
+            "fontStyle": "normal",
+            "cursor": "pointer"
+        }
+    }
+}
