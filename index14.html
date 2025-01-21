@@ -33,13 +33,50 @@
         line-height: 1.5;
         text-align: justify;
     }
+            .heading-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem 1rem;
+        overflow: hidden;
+    }
+
+    .heading-figure {
+        position: absolute;
+        top: 0;
+        right: 1rem;
+        width: 120px;
+        height: 200px;
+        z-index: 1;
+    }
     </style>
 </head>
 <body>
 
 <!-- SVG and Heading Section -->
 <div class="heading-container">
-    <img src="grafikk/familiebilde2.svg" alt="CICERO Family Illustration" class="heading-illustration">
+    <!-- Background SVG with the figure -->
+    <svg class="heading-figure" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet">
+        <g transform="translate(20, 20)">
+            <path
+                d="M40 160 C40 160 60 120 60 80 L60 60 C60 40 50 30 40 30 C30 30 20 40 20 60 L20 80 C20 120 40 160 40 160 Z"
+                fill="#8B9DC7"
+            />
+            <circle cx="40" cy="20" r="15" fill="#8B9DC7" />
+        </g>
+    </svg>
+
+    <!-- Text Overlay -->
+    <div class="heading-text">
+        <h1>
+            CICEROs<br>
+            klimaundersøkelse<br>
+            2024
+        </h1>
+    </div>
+
+    <!-- Content paragraph -->
     <div class="heading-content">
         <p>CICERO Senter for klimaforskning har siden 2018 undersøkt hvilke oppfatninger den norske befolkningen har om klimapolitikk, klimaendringer og klimatiltak. På disse sidene finner du resultater fra 2023. Utforsk resultatene i menyen under.</p>
     </div>
