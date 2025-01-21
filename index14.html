@@ -97,7 +97,7 @@ async function renderChartWithCredits(csvURL, chartType, container, jsonFile, ba
                     dataRefreshRate: 60
                 };
                 
-                fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
+                fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/ntall/${baseFileName}.txt`)
                     .then(response => response.text())
                     .then(nText => {
                         styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
