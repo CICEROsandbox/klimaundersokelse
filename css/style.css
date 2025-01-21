@@ -50,6 +50,22 @@ html, body {
     box-sizing: border-box; /* Ensure consistent padding and borders */
 }
 
+.heading-figure {
+    width: 200px;
+    height: auto;
+    margin: 2rem auto 0;
+    opacity: 0.6;
+    display: block;
+}
+
+.heading-text h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+}
+
 select {
     width: 100%;
     max-width: 100%;
