@@ -15,7 +15,7 @@ html, body {
 }
 
 .heading-container {
-    position: relative;  /* Keep this from your existing styles */
+    position: relative;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -37,7 +37,7 @@ html, body {
 
 .heading-text {
     position: relative;
-    z-index: 2;  /* Ensure text stays above the SVG */
+    z-index: 2;
 }
 
 .heading-text h1 {
@@ -50,7 +50,7 @@ html, body {
 
 .heading-content {
     position: relative;
-    z-index: 2;  /* Ensure content stays above the SVG */
+    z-index: 2;
     margin: 2rem auto;
     max-width: 800px;
     padding: 0 2rem;
