@@ -14,6 +14,18 @@ html, body {
     box-sizing: border-box; /* Ensure consistent sizing */
 }
 
+.heading-figure {
+    position: fixed;  /* or absolute, depending on your needs */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: auto;
+    opacity: 1;
+    z-index: 1;
+    max-width: none;
+}
+
 .heading-container {
     position: relative;
     width: 100%;
@@ -21,21 +33,7 @@ html, body {
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center; /* Centers content horizontally */
-    flex-direction: column;
-    align-items: center;
-}
-
-.heading-figure {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1200px;    /* Increased to 600px */
-    height: auto;
-    opacity: 1;
-    z-index: 1;
+    z-index: 2;  /* Ensure content stays above the figure */
 }
 
 .heading-text {
