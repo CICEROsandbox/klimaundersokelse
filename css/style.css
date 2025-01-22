@@ -1,3 +1,10 @@
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
 html, body {
     background-color: #ffffff !important;
     margin: 0;
@@ -8,22 +15,21 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
-    width: 100%; 
-    overflow-x: hidden; 
-    overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
-    box-sizing: border-box; /* Ensure consistent sizing */
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .heading-figure {
-    position: fixed;  /* or absolute, depending on your needs */
+    position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 1200px;
+    width: 200px;
     height: auto;
-    opacity: 1;
+    opacity: 0.6;
     z-index: 1;
-    max-width: none;
+    display: block;
 }
 
 .heading-container {
@@ -32,8 +38,7 @@ html, body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    box-sizing: border-box;
-    z-index: 2;  /* Ensure content stays above the figure */
+    z-index: 2;
 }
 
 .heading-text {
@@ -47,7 +52,6 @@ html, body {
     font-weight: bold;
     line-height: 1.2;
     margin: 0;
-    text-align: center;
 }
 
 .heading-content {
@@ -58,31 +62,14 @@ html, body {
     padding: 0 2rem;
     text-align: center;
 }
+
 .dropdown-container {
     width: 100%;
     max-width: 600px;
-    margin: 20px 20px; 
-    text-align: center;
+    margin: 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box; /* Ensure consistent padding and borders */
-}
-
-.heading-figure {
-    width: 200px;
-    height: auto;
-    margin: 2rem auto 0;
-    opacity: 0.6;
-    display: block;
-}
-
-.heading-text h1 {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: bold;
-    line-height: 1.2;
-    margin: 0;
-    text-align: center;
 }
 
 select {
@@ -96,12 +83,9 @@ select {
     color: #333;
     outline: none;
     cursor: pointer;
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-    overflow: hidden; 
+    overflow: hidden;
     transition: box-shadow 0.3s ease;
-    margin: 0 10px; 
-    box-sizing: border-box; /* Ensure padding and borders are factored in */
+    margin: 0 10px;
 }
 
 select:hover {
@@ -121,33 +105,24 @@ select:focus {
     max-width: 1200px;
     gap: 20px;
     margin-top: 20px;
-    padding: 0 10px; /* Add padding to prevent content from hitting the edges */
-    box-sizing: border-box;
+    padding: 0 10px;
 }
 
 .chart {
     width: 100%;
-    max-width: 100%;
     height: 450px;
     margin: 10px 0;
-    box-sizing: border-box;
 }
 
 .share-buttons {
     text-align: center;
     margin-top: 20px;
     padding-bottom: 60px;
-    width: 100%; /* Ensure share buttons stay within the container */
-    box-sizing: border-box;
+    width: 100%;
 }
 
 @media (max-width: 1024px) {
-    .chart-container {
-        flex-direction: column;
-    }
-
     .chart {
-        width: 100%;
         height: 400px;
     }
 }
@@ -156,11 +131,9 @@ select:focus {
     .heading-content p {
         font-size: 14px;
     }
-
     .chart {
         height: 350px;
     }
-
     select {
         font-size: 14px;
         padding: 10px;
