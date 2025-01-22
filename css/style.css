@@ -32,7 +32,8 @@ html, body {
 }
 
 .heading-container {
-    position: relative; /* Establishes a stacking context */
+    position: relative;
+    overflow: visible; /* Ensures elements within aren't clipped */
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -63,15 +64,16 @@ html, body {
 }
 
 .dropdown-container {
+    position: relative; /* Ensures dropdown is relative to this container */
     width: 100%;
     max-width: 600px;
-    margin: 20px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px auto; /* Center align the container */
+    z-index: 3; /* Ensure it is above other elements */
 }
 
 select {
+    position: relative; /* Keeps it within normal flow */
+    z-index: 4; /* Places the dropdown above its container */
     width: 100%;
     max-width: 100%;
     padding: 12px;
@@ -82,7 +84,7 @@ select {
     color: #333;
     outline: none;
     cursor: pointer;
-    overflow: hidden;
+    overflow: visible; /* Prevents the dropdown from being clipped */
     transition: box-shadow 0.3s ease;
     margin: 0 10px;
 }
@@ -136,5 +138,9 @@ select:focus {
     select {
         font-size: 14px;
         padding: 10px;
+        width: 100%;
+    }
+    .dropdown-container {
+        margin: 10px auto;
     }
 }
