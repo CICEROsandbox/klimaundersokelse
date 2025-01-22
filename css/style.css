@@ -25,9 +25,9 @@ html, body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 600px;
+    width: 1000px;
     height: auto;
-    opacity: 0.6;
+    opacity: 0.2;
     z-index: 1;
     display: block;
 }
