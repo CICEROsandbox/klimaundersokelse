@@ -21,28 +21,27 @@ html, body {
 }
 
 .heading-figure {
-    position: fixed;
+    position: absolute; /* Position the image relative to the container */
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 1000px;
+    width: 1200px;
     height: auto;
-    opacity: 0.2;
-    z-index: 1;
-    display: block;
+    opacity: 0.6; /* Adjust transparency */
+    z-index: 1; /* Ensure it is behind the text */
 }
 
 .heading-container {
-    position: relative;
+    position: relative; /* Establishes a stacking context */
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    z-index: 2;
+    box-sizing: border-box;
 }
 
-.heading-text {
-    position: relative;
+.heading-text, .heading-content {
+    position: relative; /* Position these elements above the image */
     z-index: 2;
     text-align: center;
 }
