@@ -71,6 +71,7 @@ html, body {
     text-align: center;
     padding: 0 10px; /* Add horizontal padding */
     box-sizing: border-box; /* Include padding and border in width */
+    z-index: 3;
 }
 
 .dropdown-select-container {
