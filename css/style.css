@@ -7,7 +7,7 @@ html, body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
-    font-family: 'Averta', sans-serif;
+    font-family: 'Poppins', sans-serif;
     width: 100%; 
     overflow-x: hidden; 
     overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
