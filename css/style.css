@@ -72,6 +72,12 @@ html, body {
     text-align: center;
 }
 
+#selectedQuestionHeader {
+    display: none;
+    text-align: center;
+    margin-top: 40px;
+}
+
 select {
     position: relative; /* Keeps it within normal flow */
     z-index: 4; /* Places the dropdown above its container */
