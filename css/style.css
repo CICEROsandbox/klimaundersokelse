@@ -74,7 +74,7 @@ html, body {
 
 .dropdown-select-container {
     text-align: center; /* Center-align the text */
-    margin: 20px auto; /* Add spacing around the container and center it */
+    margin: 40px auto; /* Add spacing around the container and center it */
 }
 
 #selectedQuestionHeader {
