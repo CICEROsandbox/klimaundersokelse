@@ -67,7 +67,7 @@ html, body {
     position: relative;
     width: 100%; /* Make it responsive */
     max-width: 600px; /* Prevent it from being too wide */
-    margin: 20px auto; /* Center it horizontally */
+    margin: 40px auto 20px; /* Center it horizontally */
     text-align: center;
     padding: 0 10px; /* Add horizontal padding */
     box-sizing: border-box; /* Include padding and border in width */
