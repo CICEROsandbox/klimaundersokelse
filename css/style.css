@@ -44,7 +44,7 @@ html, body {
 .heading-text {
     position: relative;
     z-index: 2;
-    text-align: center;
+    text-align: left;
 }
 
 .heading-text h1 {
