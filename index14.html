@@ -78,7 +78,6 @@
 
 <!-- Share buttons with SVG icons -->
 <div class="share-buttons" style="text-align: center; margin-top: 20px;">
-    <img src="grafikk/xlogo.svg" alt="Share on X" id="shareX" class="share-icon">
     <img src="grafikk/fblogo.svg" alt="Share on Facebook" id="shareFacebook" class="share-icon">
     <img src="grafikk/Bluesky.svg" alt="Share on Bluesky" id="shareBluesky" class="share-icon">
 </div>
@@ -282,7 +281,8 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
 
-
+});
+    
 document.getElementById('shareFacebook').addEventListener('click', function() {
     const url = window.location.href;
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
