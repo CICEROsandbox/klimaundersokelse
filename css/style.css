@@ -72,10 +72,15 @@ html, body {
     text-align: center;
 }
 
+.dropdown-select-container {
+    text-align: center; /* Center-align the text */
+    margin: 20px auto; /* Add spacing around the container and center it */
+}
+
 #selectedQuestionHeader {
-    display: none;
-    text-align: center;
-    margin-top: 40px;
+    display: block; /* Ensure it's treated as a block-level element */
+    margin-top: 20px; /* Add space above the header */
+    font-size: 1.5rem; /* Adjust font size */
 }
 
 select {
