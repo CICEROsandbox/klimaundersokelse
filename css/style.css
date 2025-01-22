@@ -69,6 +69,7 @@ html, body {
     max-width: 600px;
     margin: 20px auto; /* Center align the container */
     z-index: 3; /* Ensure it is above other elements */
+    text-align: center;
 }
 
 select {
