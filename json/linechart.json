@@ -5,7 +5,7 @@
     "title": {
         "text": "Utvikling over tid",  
         "style": {
-            "fontFamily": "Averta",
+            "fontFamily": "Poppins",
             "color": "#000000",
             "fontSize": "20px",
             "fontWeight": "bold"
@@ -17,7 +17,7 @@
         "labels": {
             "style": {
                 "fontSize": "14px",
-                "fontFamily": "Averta",
+                "fontFamily": "Poppins",
                 "color": "#666666"
             }
         }
@@ -28,7 +28,7 @@
         "title": {
             "text": "Prosent",
             "style": {
-                "fontFamily": "Averta",
+                "fontFamily": "Poppins",
                 "color": "#666666",
                 "fontSize": "14px",
                 "fontWeight": "normal"
@@ -37,7 +37,7 @@
         "labels": {
             "style": {
                 "fontSize": "14px",
-                "fontFamily": "Averta"
+                "fontFamily": "Poppins"
             }
         }
     },
@@ -77,7 +77,7 @@
     ],
     "legend": {
         "itemStyle": {
-            "fontFamily": "Averta",
+            "fontFamily": "Poppins",
             "color": "#333333",
             "fontSize": "14px",
             "fontWeight": "normal"
