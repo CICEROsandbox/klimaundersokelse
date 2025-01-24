@@ -135,6 +135,22 @@ select:focus {
     width: 100%;
 }
 
+.footer {
+    background-color: #f9f9f9; /* Optional: add a background color for the footer */
+    padding: 20px;
+    text-align: center; /* Centers the text horizontally */
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    flex-direction: column; /* Ensures the footer items are stacked vertically */
+}
+
+.footer-content {
+    max-width: 800px; /* Optional: limit the width of the footer content */
+    margin: 0 auto; /* Centers the content within the footer */
+    font-size: 1rem; /* Adjust font size as needed */
+}
+
 @media (max-width: 1024px) {
     .chart {
         height: 400px;
