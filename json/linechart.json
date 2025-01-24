@@ -86,32 +86,5 @@
     "credits": {
         "href": "",
         "text": ""  
-    },
-    "exporting": {
-        "buttons": {
-            "contextButton": {
-                "menuItems": [
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "separator",
-                    {
-                        "text": "Download CSV",
-                        "onclick": function () {
-                            const csv = this.getCSV(); // Get the CSV string
-                            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" }); // Create a Blob
-                            const url = URL.createObjectURL(blob); // Create a downloadable URL
-                            const a = document.createElement("a");
-                            a.href = url;
-                            a.download = "chart-data.csv"; // Name of the downloaded file
-                            a.style.display = "none";
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a); // Clean up
-                        }
-                    }
-                ]
-            }
-        }
     }
 }
