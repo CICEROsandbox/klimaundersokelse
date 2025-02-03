@@ -61,7 +61,6 @@ html, body {
     width: 100%;
     max-width: 900px;
     box-sizing: border-box;
-    padding: 0 10px;  /* Match chart-container padding */
 }
 
 
