@@ -1,5 +1,3 @@
-<p>Blant ulike energipolitiske spørsmål har støtten til vindkraft på land variert mest. I 2018 støttet et betydelig flertall, 65 % av respondentene, vindkraftutbygging på land, mens kun 11 % svarte at påstanden om at Norge bør øke vindkraftproduksjonen på land stemte dårlig.</p>
+<p>Støtten til økt vindkraftproduksjon er høyere i de mest sentrale kommunene enn i de minst sentrale. Dette er statistisk signifikant også når vi tar hensyn til utdanning, inntekt, kjønn og alder.</p>
 
-<p>I 2019 hadde støtten falt til 51 % og motstanden økt til 24 %. I 2021 var støtten nede i 33 %, og motstanden på 39 %.  Etter fire år med nedgang i støtten til vindkraftutbygging har støtten tre siste årene vært høyere og mer stabil.</p>
-
-<p>I 2023 oppga 42 % støtte, mens 32 % oppga det motsatte. I 2024 sank støtten litt igjen, til 37 %.  En stabil tredjedel av utvalget har hvert år svart enten "vet ikke" eller "verken eller" på dette spørsmålet.</p>
+<p>I de mest sentrale kommunene mener 39 % at Norge bør øke vindkraftproduksjonen på land (stemmer ganske eller svært godt), mens andelen er 31 % blant respondentene i de minst sentrale kommunene.</p>
