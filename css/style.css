@@ -47,10 +47,14 @@ html, body {
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
+    margin: 2rem auto;  /* Changed from 2rem 0 to 2rem auto */
     width: 100%;
     max-width: 900px;
     box-sizing: border-box;
+    display: block;  /* Ensure block display */
+    position: relative;  /* Add relative positioning */
+    left: 50%;  /* Move to the center */
+    transform: translateX(-50%);  /* Pull back by half width */
 }
 
 .heading-text, .heading-content {
