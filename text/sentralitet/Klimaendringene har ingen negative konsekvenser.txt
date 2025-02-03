@@ -1,1 +1,3 @@
-Placeholder text for Klimaendringene har ingen negative konsekvenser.txt
+<p>Personer i mer sentrale kommuner er mer enige i at klimaendringer har negative konsekvenser enn personer i mindre sentrale kommuner, og andelen enige øker jevnt med sentraliteten. I 2024 svarte 71% av dem bosatt mest sentralt (sentralitetsklasse 1) at klimaendringer har negative konsekvenser, sammenlignet med 65% av dem bosatt minst 
+sentralt (sentralitetsklasse 6). Disse forskjellene er ikke statistisk signifikante når vi kontrollerer for inntekt, utdanning, alder og kjønn.
+</p>
