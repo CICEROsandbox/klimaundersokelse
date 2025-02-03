@@ -212,20 +212,20 @@ function renderChart(csvURL, chartType, container, jsonFile) {
 
 // Function to fetch and display the paragraph under each chart container
 function displayParagraph(fileName, folder, container) {
-    fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/text/${folder}/${fileName}.txt`)
+    fetch(https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/text/${folder}/${fileName}.txt)
         .then(response => response.text())
         .then(text => {
             const containerElement = document.getElementById(container);
             const paragraphContainer = document.createElement('div');
             paragraphContainer.classList.add('paragraph-container');
-            paragraphContainer.innerHTML = `<p>${text}</p>`;
-            containerElement.closest('.chart-container').appendChild(paragraphContainer);  // Insert into chart container instead of after it
+            paragraphContainer.innerHTML = <p>${text}</p>;
+            containerElement.insertAdjacentElement('afterend', paragraphContainer);  // Insert the text after the chart container
         })
         .catch(error => {
             const containerElement = document.getElementById(container);
             const errorParagraph = document.createElement('p');
-            errorParagraph.innerHTML = `404: Text not found for ${folder}/${fileName}.txt`;
-            containerElement.closest('.chart-container').appendChild(errorParagraph);  // Same for error messages
+            errorParagraph.innerHTML = 404: Text not found for ${folder}/${fileName}.txt;
+            containerElement.insertAdjacentElement('afterend', errorParagraph);  // Insert the error message after the chart container
         });
 }
 
