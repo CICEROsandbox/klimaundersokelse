@@ -1,1 +1,42 @@
-Placeholder text for Norge bør redusere oljeproduksjonen.txt
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            color: #333;
+        }
+        
+        p {
+            margin: 0 0 1rem 0;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .content-block {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-block">
+        <p>
+            Andelen som er enige (stemmer ganske eller svært godt) i at Norge bør redusere oljeproduksjonen er høyere blant kvinner enn menn, og flere menn enn kvinner er uenige (stemmer ganske eller svært dårlig).
+        </p>
+        <p>
+            Denne forskjellen holder seg over tid, hvor kvinner i større grad enn menn er mer positive til å redusere oljeproduksjonen. Menn tar i større grad et standpunkt til påstanden, mens kvinner oftere svarer at de enten er usikre eller ambivalente.
+        </p>
+        <p>
+            I 2024 svarte 35 % av kvinnene at de enten var usikre eller ambivalente sammenlignet med 23 % av mennene.
+        </p>
+    </div>
+</body>
+</html>
