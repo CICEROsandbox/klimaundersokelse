@@ -1,1 +1,2 @@
-Placeholder text for I hvilken grad bekymrer du deg for klimaendringer.txt
+<p>Befolkningen i mer sentrale områder er mer bekymret enn befolkningen i mindre sentrale områder. Dette har vært stabilt over tid. I 2024 oppgir for eksempel 51 % av respondentene i de mest sentrale kommunene (sentralitetsklasse 1) å være ganske eller veldig bekymret, mens dette kun gjelder for 27 % av respondentene i de minst sentrale kommunene (sentralitetsklasse 6).  Denne forskjellen er derimot ikke statistisk signifikant når inntekt, utdanning, alder og kjønn er kontrollert for.  
+</p>
