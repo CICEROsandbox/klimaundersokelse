@@ -1,1 +1,2 @@
-Placeholder text for I hvilken grad bekymrer du deg for klimaendringer.txt
+<p>Aldersgruppen 45-60 år oppgir å være mindre bekymret for klimaendringer enn de andre aldersgruppene. De under 30 år oppgir å være mest bekymret for klimaendringer. Dette har vært stabilt over tid, og det er en tendens til en u-formet sammenheng mellom klimabekymring og alder: Klimabekymring går ned med økende alder, men øker litt igjen i gruppen over 60 år. 
+ </p>
