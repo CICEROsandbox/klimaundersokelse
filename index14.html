@@ -219,13 +219,13 @@ function displayParagraph(fileName, folder, container) {
             const paragraphContainer = document.createElement('div');
             paragraphContainer.classList.add('paragraph-container');
             paragraphContainer.innerHTML = `<p>${text}</p>`;
-            containerElement.insertAdjacentElement('afterend', paragraphContainer);  // Insert the text after the chart container
+            containerElement.closest('.chart-container').appendChild(paragraphContainer);  // Insert into chart container instead of after it
         })
         .catch(error => {
             const containerElement = document.getElementById(container);
             const errorParagraph = document.createElement('p');
             errorParagraph.innerHTML = `404: Text not found for ${folder}/${fileName}.txt`;
-            containerElement.insertAdjacentElement('afterend', errorParagraph);  // Insert the error message after the chart container
+            containerElement.closest('.chart-container').appendChild(errorParagraph);  // Same for error messages
         });
 }
 
