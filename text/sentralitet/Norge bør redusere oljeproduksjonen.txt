@@ -1,1 +1,3 @@
-Placeholder text for Norge bør redusere oljeproduksjonen.txt
+<p>Andelen som mener Norge bør redusere oljeproduksjonen øker med sentralitet. Denne sammenhengen er statistisk signifikant selv når vi tar hensyn til utdanning, inntekt, kjønn og alder.</p>
+
+<p>I 2024 var andelen respondenter som mener påstanden stemmer svært dårlig 26 % i de mest sentrale kommunene (sentralitetsklasse 1) mot 43 % i de minst sentrale kommunene (sentralitetsklasse 6).</p>
