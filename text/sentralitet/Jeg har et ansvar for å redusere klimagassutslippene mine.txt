@@ -1,1 +1,4 @@
-Placeholder text for Jeg har et ansvar for å redusere klimagassutslippene mine.txt
+<p>Andelen som mener de har ansvar for å redusere egne klimagassutslipp øker med sentralitet. I 2024 svarte 56 % av dem bosatt mest sentralt (sentralitetsklasse 1) at det stemte svært godt eller ganske godt at de har ansvar for å redusere egne klimagassutslipp, sammenlignet med 42 % av dem bosatt minst sentralt (sentralitetsklasse 6). 
+<br>
+<br>
+Disse forskjellene er statistisk signifikante når vi tar hensyn til inntekt, utdanning, kjønn og alder. Forskjellene mellom områder med ulik sentralitet ser ut til å være noe mindre enn i 2023, hovedsakelig fordi andelen som mener påstanden stemmer svært godt har falt i de mest sentrale områdene – fra 25 % i 2023 til 15 % i 2024. En stor andel av respondentene svarer «verken eller», men denne andelen er 10 prosentpoeng høyere i sentralitetsklasse 6 enn i sentralitetsklasse 1 (39 % mot 29 %).</p>
