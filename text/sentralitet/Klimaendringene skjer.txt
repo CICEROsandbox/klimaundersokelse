@@ -1,1 +1,1 @@
-Placeholder text for klimaendringene skjer.txt
+<p>Befolkningen i mer sentrale kommuner er mer enige i at klimaendringene skjer enn befolkningen i mindre sentrale kommuner. Disse forskjellene er ikke statistisk signifikante når man kontrollerer for alder, inntekt, utdanning, og kjønn.</p>
