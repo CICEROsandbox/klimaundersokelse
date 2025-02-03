@@ -27,7 +27,7 @@ html, body {
     transform: translateX(-50%);
     width: 1200px;
     height: auto;
-    opacity: 0.6; /* Adjust transparency */
+    opacity: 1.0; /* Adjust transparency */
     z-index: 1; /* Ensure it is behind the text */
 }
 
@@ -84,7 +84,6 @@ html, body {
     padding: 0 10px; /* Add horizontal padding */
     box-sizing: border-box; /* Include padding and border in width */
     z-index: 3;
-    background-color: #deebe4;
 }
 
 .dropdown-select-container {
