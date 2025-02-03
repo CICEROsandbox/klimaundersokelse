@@ -41,6 +41,28 @@ html, body {
     box-sizing: border-box;
 }
 
+.paragraph-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px; /* Matching your select element's border-radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 1200px; /* Matching your chart-container max-width */
+    box-sizing: border-box;
+}
+
+.paragraph-container p {
+    margin: 0;
+    text-align: justify;
+    hyphens: auto;
+    line-height: 1.6;
+    color: #333;
+    font-family: 'Poppins', sans-serif; /* Matching your body font */
+    font-size: 1rem;
+}
+
+
 .heading-text, .heading-content {
     position: relative; /* Position these elements above the image */
     z-index: 2;
@@ -173,5 +195,13 @@ select:focus {
     .dropdown-container {
         max-width: 100%; /* Use the full screen width */
         padding: 0 5px; /* Reduce padding for smaller screens */
+    }
+    .paragraph-container {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+    
+    .paragraph-container p {
+        font-size: 14px; /* Matching your responsive text size */
     }
 }
