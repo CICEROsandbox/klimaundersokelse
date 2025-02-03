@@ -1,1 +1,1 @@
-Placeholder text for I hvilken grad bekymrer du deg for klimaendringer.txt
+<p>Grad av bekymring har vært nokså stabil over tid. Andelen som svarer at de er ganske eller veldig bekymret har ligget på rundt 35 % hvert år. Andelen som er bekymret har imidlertid økt til 40 % i 2024. Få (rundt 2-3 %) svarer “vet ikke” på dette spørsmålet. I 2024 svarte 16 % av respondentene at de ikke var bekymret for klimaendringer i det hele tatt, mot 19 % i 2023. </p>
