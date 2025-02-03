@@ -1,1 +1,3 @@
-Placeholder text for klimaendringene skjer.txt
+<p>Oppfatningene om klimaendringer er nokså stabile over tid, og et stort flertall av befolkningen har oppfatninger i tråd med klimaforskningen. Et flertall mener også at det må livsstilsendringer til om vi skal kutte klimagassutslipp.
+
+Over årene mener et stort flertall av befolkningen (rundt 80 % hvert år) at klimaendringer skjer (stemmer ganske godt eller svært godt). Denne andelen har vært stabil over alle år. Andelen som mener dette ikke stemmer (stemmer ganske dårlig eller svært dårlig) har også holdt seg relativt stabil rundt 4 %. Andelen som ikke tar stilling eller er usikre er betydelig og stabil: i 2024 svarer 17 % "vet ikke" eller "verken eller" på spørsmål om klimaendringer skjer.</p>
