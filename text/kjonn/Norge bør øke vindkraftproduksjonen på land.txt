@@ -1,1 +1,5 @@
-Placeholder text for Norge bør øke vindkraftproduksjonen på land.txt
+<p>En større andel av menn enn kvinner er negative til vindkraftutbygging på land, men andelen positive er også litt høyere blant menn enn blant kvinner.</p>
+
+<p>I 2024 er 40 % av mennene og 31 % av kvinnene imot vindkraftutbygging på land, mens 39 % av mennene er for og 37 % av kvinnene er for (her oppgir 18 % av kvinnene at påstanden stemmer svært godt, mot 11 % blant menn).</p>
+
+<p>Vi ser at kvinner i større grad enn menn svarer "vet ikke" og "verken eller" på spørsmålet (32 % mot 22 % i 2024).</p>
