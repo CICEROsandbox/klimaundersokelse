@@ -56,8 +56,9 @@ html, body {
     margin: 0;
     text-align: justify;
     hyphens: auto;
+    max-width: 900px;
     line-height: 1.6;
-    color: #333;
+    color: #deebe4;
     font-family: 'Poppins', sans-serif; /* Matching your body font */
     font-size: 1rem;
 }
