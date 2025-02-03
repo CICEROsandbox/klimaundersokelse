@@ -52,18 +52,6 @@ html, body {
     box-sizing: border-box;
 }
 
-.paragraph-container {
-    background-color: #deebe4;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 2rem auto;
-    width: 100%;
-    max-width: 900px;
-    box-sizing: border-box;
-}
-
-
 .heading-text, .heading-content {
     position: relative; /* Position these elements above the image */
     z-index: 2;
