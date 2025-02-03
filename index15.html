@@ -8,6 +8,10 @@
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="css/style.css">
 
@@ -37,25 +41,34 @@
 </head>
 <body>
 
-<!-- SVG and Heading Section -->
-<div class="heading-container">
-    <img src="grafikk/familiebilde2.svg" alt="CICERO Family Illustration" class="heading-illustration">
+<!-- SVG and Heading Section -->  
+    <div class="heading-container">
+    <img class="heading-figure" src="grafikk/familiebilde.svg" alt="Decorative figure">
+        <div class="heading-text">
+        <h1>
+            CICEROs klimaundersøkelse 2024
+        </h1>
+    </div>
     <div class="heading-content">
-        <p>CICERO Senter for klimaforskning har siden 2018 undersøkt hvilke oppfatninger den norske befolkningen har om klimapolitikk, klimaendringer og klimatiltak. På disse sidene finner du resultater fra 2023. Utforsk resultatene i menyen under.</p>
+        <p>På denne nettsiden har vi samlet en del av tallene fra CICEROs årlige klimaundersøkelse.<br>
+CICERO Senter for klimaforskning har siden 2018 undersøkt hvilke oppfatninger den norske befolkningen har om klimapolitikk, klimaendringer og klimatiltak. På disse sidene finner du noen av resultatene fra 2024. Utforsk resultatene i menyen under.
+</p>
     </div>
 </div>
-
+    
 <!-- Dropdown menu to select the question -->
-<label for="questionSelect">Velg påstand:</label>
+
 <div class="dropdown-container">
+    <label for="questionSelect">Velg påstand:</label>
     <select id="questionSelect">
         <option value="" disabled selected>Velg spørsmål her</option>
     </select>
 </div>
 
-<!-- H1 Header to display the selected question -->
-<h1 id="selectedQuestionHeader" style="display: none; text-align: center; margin-top: 20px;"></h1>
-
+<div class="dropdown-select-container">
+    <h2 id="selectedQuestionHeader"></h2>
+</div>
+ 
 <!-- Container to hold all three charts, initially hidden -->
 <div class="chart-container" style="display: none;">
     <div id="lineChartContainer" class="chart" style="display: none;"></div>
@@ -63,12 +76,6 @@
     <div id="ageChartContainer" class="chart" style="display: none;"></div>
     <div id="sentralitetChartContainer" class="chart" style="display: none;"></div>
     <div id="partierChartContainer" class="chart" style="display: none;"></div>
-</div>
-
-<!-- Share buttons with SVG icons -->
-<div class="share-buttons" style="text-align: center; margin-top: 20px;">
-    <img src="grafikk/xlogo.svg" alt="Share on X" id="shareX" class="share-icon">
-    <img src="grafikk/fblogo.svg" alt="Share on Facebook" id="shareFacebook" class="share-icon">
 </div>
 
 <script>
@@ -97,7 +104,7 @@ async function renderChartWithCredits(csvURL, chartType, container, jsonFile, ba
                     dataRefreshRate: 60
                 };
                 
-                fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/${folder}/Ntall/${baseFileName}.txt`)
+                fetch(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/ntall/${baseFileName}.txt`)
                     .then(response => response.text())
                     .then(nText => {
                         styleConfig.credits.text = `${nText.trim()}, CICEROs klimaundersøkelse`;
@@ -135,32 +142,9 @@ const titleMap = {
     // Add more mappings here
 };
     
-// Function to load and render all three charts based on the selected question
+    // Function to load and render all three charts based on the selected question
 function renderCharts(question) {
     const baseFileName = decodeURIComponent(question.replace('.csv', ''));
-
-    // Determine which JSON configuration to use based on question type
-    const getConfigFile = (questionText) => {
-        if (questionText.startsWith('Vil du')) {
-            return 'vil-du-columns.json';
-        } else if (questionText.includes('bekymrer')) {
-            return 'bekymring-columns.json';
-        } else if (questionText.includes('Om lag hvor ofte')) {
-            return 'frequency-columns.json';
-        } else if (questionText.includes('Det legges') || 
-                   questionText.includes('Folk jeg kjenner') ||
-                   questionText.includes('Jeg har') ||
-                   questionText.includes('Norge bør') ||
-                   questionText.includes('Ny teknologi') ||
-                   questionText.includes('Strømforbruk') ||
-                   questionText.includes('Livsstilen') ||
-                   questionText.includes('Klimaendringene') ||
-                   questionText.includes('Menneskelig aktivitet')) {
-            return 'columns-stemmer-stacked.json';
-        } else {
-            return 'columns.json';  // default configuration
-        }
-    };
 
     // Clear previous text and charts before rendering new ones
     clearPreviousContent();
@@ -171,34 +155,34 @@ function renderCharts(question) {
     // Update the H1 header with the selected question
     const header = document.getElementById('selectedQuestionHeader');
     header.style.display = 'block';
-    if (titleMap[baseFileName]) {
-        header.textContent = titleMap[baseFileName];
-    } else {
-        header.textContent = baseFileName;
-    }
+    // Check if the file has a corresponding title with a question mark
+if (titleMap[baseFileName]) {
+    header.textContent = titleMap[baseFileName];
+} else {
+    header.textContent = baseFileName; // Fallback to the file name if no mapping is found
+}
+
 
     // Update the URL with the selected question
     const url = new URL(window.location);
     url.searchParams.set('question', question);
     window.history.pushState({}, '', url);
 
-    // Get the appropriate JSON config file for this question type
-    const configFile = getConfigFile(baseFileName);
-
     // Render line chart with data from /data/ using linechart.json
     renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/utvikling/${question}`, 'spline', 'lineChartContainer', 'linechart.json', baseFileName, 'utvikling');
     
-    // Render gender distribution chart with data from /data/kjonn/ using appropriate config
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/2024/${question}`, 'column', 'genderChartContainer', configFile, baseFileName, 'kjonn');
+    // Render gender distribution chart with data from /data/kjonn/ using columns.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/kjonn/2024/${question}`, 'column', 'genderChartContainer', 'columns.json', baseFileName, 'kjonn');
 
-    // Render age distribution chart with appropriate config
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', configFile, baseFileName, 'alder');
+    // Render age distribution chart with data from /data/alder/ using appropriate json based on question type
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/alder/2025/${question}`, 'column', 'ageChartContainer', 'columns-age.json', baseFileName, 'alder');
 
-    // Render sentralitet distribution chart with appropriate config
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/2025/${question}`, 'column', 'sentralitetChartContainer', configFile, baseFileName, 'sentralitet');
+    // Render sentralitet distribution chart with data from /data/sentralitet/ using columns-sentralitet.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/sentralitet/2025/${question}`, 'column', 'sentralitetChartContainer', 'columns-sentralitet.json', baseFileName, 'sentralitet');
 
-    // Render partier distribution chart with appropriate config
-    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/2025/${question}`, 'column', 'partierChartContainer', configFile, baseFileName, 'partier');
+    // Render partier distribution chart with data from /data/partier/ using columns.json
+renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/2025/${question}`, 'column', 'partierChartContainer', 'columns-partier.json', baseFileName, 'partier');
+
 
     // Fetch and display the corresponding text for each chart
     displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
@@ -206,6 +190,7 @@ function renderCharts(question) {
     displayParagraph(baseFileName, 'alder', 'ageChartContainer');
     displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
     displayParagraph(baseFileName, 'partier', 'partierChartContainer');
+
 }
 
 
@@ -291,18 +276,40 @@ document.getElementById('questionSelect').addEventListener('change', function ()
 // Populate the dropdown when the page loads
 document.addEventListener('DOMContentLoaded', function () {
     populateDropdown();
-});
-    document.getElementById('shareX').addEventListener('click', function() {
-    const url = window.location.href;  // Get current page URL
-    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, '_blank');
-});
 
+});
+    
 document.getElementById('shareFacebook').addEventListener('click', function() {
     const url = window.location.href;
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
 });
 
+document.getElementById('shareBluesky').addEventListener('click', function() {
+    const url = window.location.href;
+    window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(url)}`, '_blank');
+});    
+    
 </script>
 
+<footer class="footer">
+    <div class="footer-content">
+        <p>På denne nettsiden har vi samlet en del av tallene fra CICEROs årlige klimaundersøkelse. Undersøkelsen er utviklet i et forskningsprosjekt finansiert av Norges Forskningsråd, med formålet å lage tidsserie med data over oppfatninger om klima, klimarelevante handlinger og normer i befolkningen, samt oppfatninger om politiske virkemidler og tiltak. Databasen er nyttig for å studere endringer over tid i folks handlinger, men også holdninger til virkemidler som settes ut i livet, samt effektene av dem. Vi har samlet disse dataene siden 2018. 
+
+Mange av spørsmålene som stilles i undersøkelsen presenteres ikke her, men vies grundigere analyser i publiserte og kommende vitenskapelige artikler. Se publikasjoner.</p>
+
+        <p>&copy; 2024 CICERO Senter for Klimaforskning. All rights reserved.</p>
+    <div class="share-buttons" style="text-align: center; margin-top: 20px;">
+    <img src="grafikk/fblogo.svg" alt="Share on Facebook" id="shareFacebook" class="share-icon">
+    <img src="grafikk/Bluesky.svg" alt="Share on Bluesky" id="shareBluesky" class="share-icon">
+</div>
+        <p>
+            <a href="#about">About</a> | 
+            <a href="#contact">Contact</a> | 
+            <a href="#privacy">Privacy Policy</a>
+        </p>
+    </div>
+</footer>
+    
+    
 </body>
 </html>
