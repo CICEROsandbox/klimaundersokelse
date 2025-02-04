@@ -249,14 +249,74 @@ function populateDropdown() {
             const dropdown = document.getElementById('questionSelect');
             dropdown.innerHTML = '';  // Clear the loading message
 
-            data.forEach(file => {
-                if (file.name.endsWith('.csv')) {  // Only include CSV files
-                    const option = document.createElement('option');
-                    option.value = file.name;
-                    option.textContent = decodeURIComponent(file.name.replace('.csv', ''));
-                    dropdown.appendChild(option);
+            // Create category groups
+            const categories = {
+                'Bekymringer': [
+                    'I hvilken grad bekymrer du deg for klimaendringer',
+                    'I hvilken grad bekymrer du deg for tap av natur'
+                ],
+                'Vilje til handling': [
+                    'Vil du redusere antall flyreiser',
+                    'Vil du redusere mengden matavfall',
+                    'Vil du redusere energiforbruket i boligen din',
+                    'Vil du redusere antall reiser med bil som bruker diesel eller bensin',
+                    'Vil du redusere antall måltider med rødt kjøtt'
+                ],
+                'Sosiale normer': [
+                    'Dersom en person i omgangskretsen din oppfører seg lite klimavennlig i hvilken grad vil det bli kommentert'
+                ]
+            };
+
+            // Create an array of all files for sorting
+            const files = data
+                .filter(file => file.name.endsWith('.csv'))
+                .map(file => file.name);
+
+            // Create option groups
+            Object.entries(categories).forEach(([category, questions]) => {
+                const group = document.createElement('optgroup');
+                group.label = category;
+
+                // Add matching files to this category
+                questions.forEach(question => {
+                    const matchingFile = files.find(file => 
+                        file.replace('.csv', '') === question
+                    );
+                    
+                    if (matchingFile) {
+                        const option = document.createElement('option');
+                        option.value = matchingFile;
+                        option.textContent = titleMap[question] || question;
+                        group.appendChild(option);
+                    }
+                });
+
+                // Only add group if it has options
+                if (group.children.length > 0) {
+                    dropdown.appendChild(group);
                 }
             });
+
+            // Add any remaining files to an "Andre spørsmål" (Other questions) group
+            const usedQuestions = Object.values(categories).flat();
+            const remainingFiles = files.filter(file => 
+                !usedQuestions.includes(file.replace('.csv', ''))
+            );
+
+            if (remainingFiles.length > 0) {
+                const otherGroup = document.createElement('optgroup');
+                otherGroup.label = 'Andre spørsmål';
+                
+                remainingFiles.sort().forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file;
+                    const baseName = file.replace('.csv', '');
+                    option.textContent = titleMap[baseName] || baseName;
+                    otherGroup.appendChild(option);
+                });
+
+                dropdown.appendChild(otherGroup);
+            }
 
             // Check if URL has a question parameter and auto-select it
             const urlParams = new URLSearchParams(window.location.search);
