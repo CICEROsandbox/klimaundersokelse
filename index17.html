@@ -184,13 +184,17 @@ if (titleMap[baseFileName]) {
     // Render partier distribution chart with data from /data/partier/ using columns.json
 renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/partier/2025/${question}`, 'column', 'partierChartContainer', 'columns-partier.json', baseFileName, 'partier');
 
+    // Render airtravel  chart with data from /data/airtravel/ columns-airtravel.json
+    renderChartWithCredits(`https://raw.githubusercontent.com/CICEROsandbox/klimaundersokelse/main/data/airtravel/${question}`, 'column', 'airTravelChartContainer', 'columns-airtravel.json', baseFileName, 'airtravel');
 
+    
     // Fetch and display the corresponding text for each chart
     displayParagraph(baseFileName, 'utvikling', 'lineChartContainer');
     displayParagraph(baseFileName, 'kjonn', 'genderChartContainer');
     displayParagraph(baseFileName, 'alder', 'ageChartContainer');
     displayParagraph(baseFileName, 'sentralitet', 'sentralitetChartContainer');
     displayParagraph(baseFileName, 'partier', 'partierChartContainer');
+    displayParagraph(baseFileName, 'airtravel', 'airTravelChartContainer');
 
 }
 
