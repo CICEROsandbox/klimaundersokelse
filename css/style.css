@@ -45,7 +45,7 @@ html, body {
 .paragraph-container {
     background-color: #deebe4;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 01px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 2rem auto;  /* Changed from 2rem 0 to 2rem auto */
     width: 100%;
