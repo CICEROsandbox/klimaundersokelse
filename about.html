@@ -13,6 +13,7 @@
             background-color: #deebe4;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         h1 {
             text-align: center;
@@ -24,11 +25,33 @@
             line-height: 1.6;
             text-align: justify;
         }
+        .home-button {
+            display: block;
+            margin: 1rem auto;
+            padding: 0.75rem 1.5rem;
+            background-color: #0073e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .home-button:hover {
+            background-color: #005bb5;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Om Nettsiden</h1>
+    </header>
+    <div class="container">
+        <a href="index.html" class="home-button">Hjem</a>
         <p>Denne nettsiden er laget av CICERO, mens spørreskjemaet er utviklet av forskere i forskningsprosjektet ACT, ledet av Marianne Aasen (med Arild Vatn (NMBU), John Thøgersen (Aarhus University), Ottar Hellevik (Universitetet i Oslo), Riley Dunlap (Oklahoma State University), Dana R. Fisher (University of Maryland), Paul S. Stern (National Academies of Science)).</p>
         <p>Datasamlingene er gjennomført som nettbaserte spørreundersøkelser av Verian (tidligere Kantar Public) på våren alle år. Respondentene er rekruttert fra Verian sitt befolkningspanel. Spørreskjemaene for disse datainnsamlingene er i hovedsak like og rettet til et utvalg av den norske befolkningen over 18 år. Utvalgsstørrelsen er 4000-5000 alle årene, der noen svarer flere år (panel).</p>
         <p>Det er i hovedsak god representativitet i alle års utvalg med hensyn til alder, kjønn og geografi. I alle årganger er utvalgene noe underrepresenterte blant de under 30 år til fordel for eldre aldersgrupper, og litt underrepresentert blant de med lavere utdanningsnivå. Det første betyr at den deskriptive statistikken tenderer mot å undervurdere nivåer på bekymring og støtte til politikk, mens den andre tenderer mot å overvurdere disse.</p>
@@ -36,6 +59,8 @@
         <p>Utvalget er splittet tilfeldig i to underutvalg i alle år, og noen spørsmål er bare stilt til det ene eller det andre underutvalget for på den måten å redusere antall spørsmål den enkelte må svare på.</p>
         <p>For å få et bilde av betydningen av ulike sosiodemografiske faktorer er det gjort en rekke ordinale logistiske regresjoner. Regresjonene er kjørt med ulike referansegrupper og ulike kombinasjoner av faktorer og referansegrupper. Vi har inkludert alder, kjønn, utdanning, inntekt og bosted som variabler i analysene.</p>
     </div>
+    <footer class="footer">
+        <p>&copy; 2024 CICERO Senter for Klimaforskning. All rights reserved.</p>
+    </footer>
 </body>
 </html>
-
