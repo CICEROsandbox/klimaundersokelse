@@ -2,7 +2,7 @@
     "title": {
         "text": "Alder (2024)",
         "style": {
-            "fontFamily": "Poppins",
+            "fontFamily": "Averta",
             "color": "#000000",
             "fontSize": "20px",
             "fontWeight": "bold",
@@ -13,7 +13,7 @@
     "subtitle": {
         "text": "",
         "style": {
-            "fontFamily": "Poppins",
+            "fontFamily": "Averta",
             "color": "#3250c8",
             "fontSize": "17px",
             "fontWeight": "normal",
@@ -130,7 +130,7 @@
     },
     "legend": {
         "itemStyle": {
-            "fontFamily": "Poppins",
+            "fontFamily": "Averta",
             "color": "#333333",
             "fontSize": "14px",
             "fontWeight": "bold",
