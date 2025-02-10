@@ -354,15 +354,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
     
-document.getElementById('shareFacebook').addEventListener('click', function() {
-    const url = window.location.href;
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('shareFacebook').addEventListener('click', function() {
+        const url = window.location.href;
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    });
 
-document.getElementById('shareBluesky').addEventListener('click', function() {
-    const url = window.location.href;
-    window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(url)}`, '_blank');
-});    
+    document.getElementById('shareBluesky').addEventListener('click', function() {
+        const url = window.location.href;
+        window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(url)}`, '_blank');
+    });
+});
+  
     
 </script>
 
